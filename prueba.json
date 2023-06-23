@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Vino El bolson",
+    "description": "Este vino lo toma bilbo",
+    "price": 875,
+    "thumbnail": "aca va una imagen de la comarca",
+    "code": "facundin2",
+    "stock": 1,
+    "id": 1
+  },
+  {
+    "title": "otro producto prueba",
+    "description": "Este es el 2do producto prueba",
+    "price": 653,
+    "thumbnail": "tampoco tiene imagen",
+    "code": "xyz987",
+    "stock": 30,
+    "id": 2
+  },
+  {
+    "title": "producto prueba",
+    "description": "Este es un producto prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "abc8795213",
+    "stock": 25,
+    "id": 3
+  },
+  {
+    "title": "producto prueba",
+    "description": "Este es un producto prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "jiji",
+    "stock": 25,
+    "id": 4
+  },
+  {
+    "title": "producto prueba",
+    "description": "Este es un producto prueba",
+    "price": 200,
+    "thumbnail": "sin imagen",
+    "code": "jijiwq",
+    "stock": 25,
+    "id": 5
+  }
+]
