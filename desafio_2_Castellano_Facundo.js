@@ -137,9 +137,8 @@ class ProductManager {
 
 //TEST DE FUNCIONAMIENTO https://github.com/FacuCastellano/coderBackendDesafiosCastellanoFacundo.git
 
-const miVineria = new ProductManager(path.join(__dirname, "prueba.json"));
+//const miVineria = new ProductManager(path.join(__dirname, "prueba.json"));
 
-//miVineria.showProductsCode();
 //console.log(miVineria.getProducts()) //-->obtengo los productos del archivo prueba.json
 
 //descomentar el siguiente codigo para mostrar el error al cargar el producto por falta de un atributo (thumbnail en este caso.)
