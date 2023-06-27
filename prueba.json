@@ -1,47 +1,56 @@
 [
   {
-    "title": "Vino El bolson",
-    "description": "Este vino lo toma bilbo",
-    "price": 875,
-    "thumbnail": "aca va una imagen de la comarca",
-    "code": "facundin2",
-    "stock": 1,
+    "title": "El bolson",
+    "description": "malbec",
+    "price": 8750,
+    "thumbnail": "imagen/el_bolson",
+    "code": "abc4126",
+    "stock": 18,
     "id": 1
   },
   {
-    "title": "otro producto prueba",
-    "description": "Este es el 2do producto prueba",
-    "price": 653,
-    "thumbnail": "tampoco tiene imagen",
+    "title": "mi gran enemigo",
+    "description": "malbec",
+    "price": 4500,
+    "thumbnail": "imagen/el_gran_enaemigo",
     "code": "xyz987",
     "stock": 30,
     "id": 2
   },
   {
-    "title": "producto prueba",
+    "title": "quara",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": "sin imagen",
+    "thumbnail": "imagen/quara",
     "code": "abc8795213",
     "stock": 25,
     "id": 3
   },
   {
-    "title": "producto prueba",
+    "title": "ladran sancho",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": "sin imagen",
-    "code": "jiji",
+    "thumbnail": "imagen/ladran_sancho",
+    "code": "dsar1251",
     "stock": 25,
     "id": 4
   },
   {
-    "title": "producto prueba",
+    "title": "santa julia",
     "description": "Este es un producto prueba",
     "price": 200,
-    "thumbnail": "sin imagen",
-    "code": "jijiwq",
+    "thumbnail": "imagen/santa_julia",
+    "code": "jaja6523",
     "stock": 25,
     "id": 5
+  },
+  {
+    "title": "lobo con piel de cordero",
+    "description": "malbec",
+    "price": 1850,
+    "thumbnail": "imagenes/lobo_con_piel_de_cordero",
+    "code": "lobo1234",
+    "stock": 36,
+    "id": 6
   }
 ]

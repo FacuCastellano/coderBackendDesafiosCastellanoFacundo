@@ -1,0 +1,20 @@
+Realizar una clase de nombre "ProductManager", el cual permitira trabajar con multiples productos.
+Esta debe poder agregar, consultar, moodificar y eliminar un producto y manejarlo en persistencia de archivos (basado en entregable 1)
+
+Aspectos a incluir.
+La clase debe contar con una variable this.path, la cual se inicializará desde el constructor y debe recibir la ruta a trabajar desde el momento de generar su instancia.
+
+Debe guardar objetos con el siguiente formato
+{id,title,description,price,thumbnail,code,stock} *el id debe ser autoincrementable automaticamente y no se debe enviar como parametro.
+
+debe tener un metodo AddProduct el cual debe recibir un objeto con el formato previamente especificado, asignarle un id y guardarlo en el arreglo (recuerda siempre guardarlo como un array en el archivo)
+
+Debe tener un metodo getyProducts, el cual debe leer el archivo de productos y devolver todos los productos en formato de arreglo.
+
+debe tener un método getProductById, el cual debe recibir un Id, y tras leer el archivo, debe buscar el producto con el id especificado y devolverlo en formato OBJETO.
+
+debe tener un metodo updateProduct el cual debe recibir el id del producto a actualizar, asi tambien como el campo a actualizar (puede ser el objeto completo como en una BD), y debe actualizar el producto que tenga ese Id en el archivo (NO DEBE BORRARSE SU ID)
+
+debe tener un metodo deleteProduct, el cual debe recibir un id y debe eliminar el producto que tenga ese id en el archivo.
+
+entregar como archivo de javascript con el nombre de ProductManager.js.

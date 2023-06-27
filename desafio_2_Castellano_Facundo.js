@@ -1,10 +1,9 @@
 //Desafio 2  - Castellano Facundo.
+//El archivo prueba.json contiene elementos de prueba, por lo que se lo debe descargar si se quiere probar según los comentarios de mas abajo.
 
-const { clear } = require("console");
+
 const fs = require("fs");
-const { get } = require("https");
 const path = require("path");
-const { isArrayBuffer } = require("util/types");
 
 class ProductManager {
   constructor(pathFile) {
@@ -91,7 +90,7 @@ class ProductManager {
   modifyProductById(idProduct, newProduct) {
     try {
       const oldProduct = this.getProductById(idProduct);
-      const codeTodelete = oldProduct
+      const codeTodelete = oldProduct.code;
       const { title, description, price, thumbnail, code, stock } = newProduct;
       const productUpdated = {
         title,
@@ -102,14 +101,33 @@ class ProductManager {
         stock,
       };
 
-      if (!Object.values(productUpdated).includes(undefined)) {
-        console.log("entre al IF");
-        this.productsCode.splice(this.productsCode.indexOf(codeTodelete),1,code); //--> modifico el code de productsCode
+      const arrayCodeAuxiliar = [...this.productsCode]; // este array me ayuda a poder separar todos los code de los otros productos, (es decir sacar el del producto que estoy intentando modificar)
+      arrayCodeAuxiliar.splice(this.productsCode.indexOf(codeTodelete), 1);
+
+      if (
+        !Object.values(productUpdated).includes(undefined) &&
+        !arrayCodeAuxiliar.includes(code)
+      ) {
+        this.productsCode.splice(
+          this.productsCode.indexOf(codeTodelete),
+          1,
+          code
+        ); //--> modifico el code de productsCode
         productUpdated.id = oldProduct.id; //--> mantengo el Id que es generado automaticamente
-        this.products.splice(this.products.indexOf(oldProduct),1,productUpdated);
+        this.products.splice(
+          this.products.indexOf(oldProduct),
+          1,
+          productUpdated
+        );
         fs.writeFileSync(this.path, JSON.stringify(this.products));
       } else {
-        throw new Error("Productos con los parametros mal definidos");
+        if (this.productsCode.includes(code)) {
+          throw new Error(
+            "Se intenta modificar un producto, pero el campo code coincide con otro producto, solo se permite que coincida con el codigo que tenia el mismo producto anteriormente."
+          );
+        } else {
+          throw new Error("Productos con los parametros mal definidos");
+        }
       }
     } catch (err) {
       throw err;
@@ -120,71 +138,31 @@ class ProductManager {
 //TEST DE FUNCIONAMIENTO https://github.com/FacuCastellano/coderBackendDesafiosCastellanoFacundo.git
 
 const miVineria = new ProductManager(path.join(__dirname, "prueba.json"));
-miVineria.showProductsCode();
-//miTienda.deleteProductByID(13)
-//console.log(miVineria.getProductById(5))
 
-//setTimeout(()=>{console.log(miTienda2.getProducts())},2000)
-//console.log(miTienda2.getProducts());
+//miVineria.showProductsCode();
+//console.log(miVineria.getProducts()) //-->obtengo los productos del archivo prueba.json
 
-const productModified = {
-  title: "Vino El bolson",
-  description: "Este vino lo toma bilbo",
-  price: 875,
-  thumbnail: "aca va una imagen de la comarca",
-  code: "facundin2",
-  stock: 1,
-};
+//descomentar el siguiente codigo para mostrar el error al cargar el producto por falta de un atributo (thumbnail en este caso.)
+//miVineria.addProduct({title:"lobo con piel de cordero",description:"malbec",price:1850,code:"lobo1234",stock:36}) // debe lanzar error.
 
-miVineria.modifyProductById(1, productModified);
-//console.log(miVineria.getProductById(5))
-// {
-//   "title": "otro producto prueba",
-//   "description": "Este es el 2do producto prueba",
-//   "price": 653,
-//   "thumbnail": "tampoco tiene imagen",
-//   "code": "xyz987",
-//   "stock": 30,
-//   "id": 2
-// }
+//descomentar el siguiente codigo para eliminar un producto por id
+//miVineria.deleteProductByID(6)
 
-// miTienda.addProduct({
-//   title: "otro producto prueba",
-//   description: "Este es el 2do producto prueba",
-//   price: 653,
-//   thumbnail: "tampoco tiene imagen",
-//   code: "xyz987",
+//descomentar el siguiente codigo para agregar un producto, esto se deberia hacer una vez eliminado el producto en el paso anterior.
+//miVineria.addProduct({title:"lobo con piel de cordero",description:"malbec",price:1850,thumbnail:"imagenes/lobo_con_piel_de_cordero",code:"lobo1234",stock:36})
+
+//descomentar el siguiente codigo para mostrar el error al cargar el producto por cargar un producto con el mismo codigo (el code correspondo al producto 1)
+//miVineria.addProduct({title:"El elixir",description:"malbec",price:2500,thumbnail:"imagenes/el_elixir",code:"abc4126",stock:36})
+
+//descomentar el siguiente codigo para ver la modificacion de un producto.
+
+// const productModified = {
+//   title: "el gran amigo",
+//   description: "blend",
+//   price: 9500,
+//   thumbnail: "imagen/el_gran_amigo",
+//   code: "xyz987", //  --> debe ser diferente a los code de los otros productos que ya exisiten, si fuera un code de otro producto tira error, probar con "code":"abc4126" que pertenece al producto de id = 1, Este code SI puede ser igual al code que tenia el mismo producto antes de modificarse, como en este caso (aunque eso no es necesario.)
 //   stock: 30,
-// });
+// };
 
-// miTienda.addProduct({
-//   title: "tercer producto",
-//   description: "Este es el 3do producto prueba",
-//   price: 369,
-//   thumbnail: "Uno mas sin imagen",
-//   code: "000123-dsawss",
-//   stock: 30,
-// });
-
-// descomentar la siguiente linea para checkear el error por duplicidad de codigo en los productos.
-// miTienda.addProduct({
-//   title: "producto prueba",
-//   description: "Este es un producto prueba",
-//   price: 200,
-//   thumbnail: "sin imagen",
-//   code: "abc123",
-//   stock: 25,
-// });
-
-// descomentar la siguiente linea para checkear el error por atributos de un producto incompleto, en este caso se omitio tiene el campo 'description'.
-//miTienda.addProduct({title:"producto prueba",price:200,thumbnail:"sin imagen",code:"123456",stock:25})
-
-//metodo para obtener un producto segun el Id.
-// const miProductoBuscado = miTienda.getProductById(1);
-//console.log(miProductoBuscado);
-// const miProductoBuscado2 = miTienda.getProductById(12);
-// console.log(miProductoBuscado2);
-
-// descomentar las siguientes lineas para checkear el error por buscar un producto de Id inexistente.
-//const miProductoBuscado4 = miTienda.getProductById(123) //tira error que el producto con dicho Id no existe
-// const miProductoBuscado3 = miTienda.getProductById("1") // tira error porque el metodo usa el operador de igualdad estrica y los Id son number.
+// miVineria.modifyProductById(2, productModified);
