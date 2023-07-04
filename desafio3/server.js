@@ -1,5 +1,5 @@
 const express = require("express");
-const { ProductManager } = require("../desafio2/desafio_2_Castellano_Facundo");
+const { ProductManager } = require("./desafio_2_Castellano_Facundo");
 const fs = require("fs");
 const path = require("path");
 
