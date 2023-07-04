@@ -1,7 +1,6 @@
 //Desafio 2  - Castellano Facundo.
 //El archivo prueba.json contiene elementos de prueba, por lo que se lo debe descargar si se quiere probar según los comentarios de mas abajo.
 
-
 const fs = require("fs");
 const path = require("path");
 
@@ -134,6 +133,10 @@ class ProductManager {
     }
   }
 }
+
+module.exports = {
+  ProductManager,
+};
 
 //TEST DE FUNCIONAMIENTO https://github.com/FacuCastellano/coderBackendDesafiosCastellanoFacundo.git
 
