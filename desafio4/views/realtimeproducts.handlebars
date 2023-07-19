@@ -1,0 +1,44 @@
+{{#each products}}
+  <div>
+    <div class='uk-card uk-card-default'>
+      <div class='uk-card-media-top'>
+        <img alt='foto producto' />
+      </div>
+      <div class='uk-card-body'>
+        <h3 class='uk-card-title'>{{this.title}}</h3>
+        <h5>USD ${{this.price}}</h5>
+        <span class='uk-badge'>{{this.category}}</span>
+        <p>{{this.description}}</p>
+        <button class='uk-button uk-button-secondary uk-button-small'>Agregar al
+          carrito</button>
+      </div>
+    </div>
+  </div>
+{{/each}}
+
+<form id="formAddProduct" action='http://localhost:8080/api/products/' method='post'>
+  <label for='title'>Título:</label><br />
+  <input type='text' id='title' name='title' value='doble cuerno 3500cc' /><br/>
+
+  <label for='description'>Descripción:</label><br />
+  <textarea id='description' name='description' rows='2' cols='50'>escriba la descripcion.</textarea><br />
+  <label for='price'>Precio USD:</label><br />
+  <input type='number' id='price' name='price' value='' /><b />
+
+  <label for='code'>Código:</label><br />
+  <input type='text' id='code' name='code' value='' /><br /><br />
+
+  <label for='stock'>Stock:</label><br />
+  <input type='number' id='stock' name='stock' value='' /><br /><br />
+
+  <label for='status'>Estado:</label><br />
+  <input type='checkbox' id='status' name='status' checked /><br /><br />
+
+  <label for='category'>Categoría:</label><br />
+  <input type='text' id='category' name='category' value='Humanos' /><br />
+
+  <label for='thumbnails'>Path de la imagen</label><br />
+  <input type='text' id='thumbnails' name='thumbnails[]' value='path-img1' /><b/>
+  
+  <input type='submit' value='Enviar' />
+</form>
