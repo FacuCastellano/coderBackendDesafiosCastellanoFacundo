@@ -1,0 +1,26 @@
+`Hola Facu!! Buen trabajo!!
+
+Sin embargo te paso algunas consideraciones, a mi siempre gusta dar devoluciones constructivas, no pasar detalles por alto y pensar cosas para ir mejorando a lo largo de toda la cursada, pero no por ello significa que el trabajo está mal, todo lo contrario.
+
+Debés haber notado que al ejecutar el script y levantar el servidor, cuando accedemos a la ruta http://localhost:8080/products, trae bien los productos pero la consola muestra el siguiente msj de error: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client, estuve investigando un poquito y esto ocurre por el orden en el que se envían las respuestas. Por ejemplo vamos al primer if, si limit no es un número válido se envía una respuesta con un mensaje de error, pero después de eso, aún hay un flujo de ejecución continuo y se intenta enviar otra respuesta en la siguiente línea (res.send(JSON.stringify(misProductos.getProducts()))). Podés reorganizar la manera en la que estás realizando las validaciones, o simplemente agregar un return a cada respuesta y nos aseguramos de detener la ejecución y no siga con el código que sigue ====>  return res.send(misProductos.getProducts());
+
+Otra cosa, al momento de devolver todos los productos no hace falta aplicar JSON.stringify res.json(JSON.stringify(misProductos.getProducts())), ya que l navegador lo va a interpretar igual, basta con enviar la respuesta res.send(misProductos.getProducts());  lo mismo cuando aplicamos el filtro de limit y enviamos la respuesta, podría ser simplemente res.send(productsToshow);
+
+Y por último, la consigna dice: Se mandará a llamar desde el navegador a la url http://localhost:8080/products/34123123, al no existir el id del producto, debe devolver un objeto con un error indicando que el producto no existe.
+
+Lo hiciste bien, me devuelve un msj de error, pero si quisiéramos hacerlo tal cual pide, podrías hacer algo así:
+
+let product;
+
+  try {
+
+    product = misProductos.getProductById(+id);
+
+  } catch {
+
+    res.status(404).json({ error: `The product with the id ${id} was not found` }); ///MSJ DE ERROR COMO OBJETO
+
+  }
+
+
+  res.send(product); `
