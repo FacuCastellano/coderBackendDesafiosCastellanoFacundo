@@ -6,6 +6,7 @@ const router = Router()
 
 router.get('/', (req, res) => {
   const products = myProducts.getProducts()
+  
   res.render('products', {
     products,
     route: {

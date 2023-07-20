@@ -1,5 +1,5 @@
 {{#each products}}
-  <div>
+  <div id="productID-{{this.id}}">
     <div class='uk-card uk-card-default'>
       <div class='uk-card-media-top'>
         <img alt='foto producto' />
@@ -16,14 +16,14 @@
   </div>
 {{/each}}
 
-<form id="formAddProduct" action='http://localhost:8080/api/products/' method='post'>
+<form id="formAddProduct" >
   <label for='title'>Título:</label><br />
-  <input type='text' id='title' name='title' value='doble cuerno 3500cc' /><br/>
+  <input type='text' id='title' name='title' value='' /><br/>
 
   <label for='description'>Descripción:</label><br />
   <textarea id='description' name='description' rows='2' cols='50'>escriba la descripcion.</textarea><br />
-  <label for='price'>Precio USD:</label><br />
-  <input type='number' id='price' name='price' value='' /><b />
+  <label for='price'>Precio :</label><br />
+  <input type='number' id='price' name='price' value='' /><br />
 
   <label for='code'>Código:</label><br />
   <input type='text' id='code' name='code' value='' /><br /><br />
@@ -38,7 +38,9 @@
   <input type='text' id='category' name='category' value='Humanos' /><br />
 
   <label for='thumbnails'>Path de la imagen</label><br />
-  <input type='text' id='thumbnails' name='thumbnails[]' value='path-img1' /><b/>
+  <input type='text' id='thumbnails' name='thumbnails1' value='/ruta/a/la/img1' /><br/>
+  <input type='text' id='thumbnails' name='thumbnails2' value='/ruta/a/la/img2' /><br/>
+  <input type='text' id='thumbnails' name='thumbnails3' value='/ruta/a/la/img3' /><br/>
   
-  <input type='submit' value='Enviar' />
+  <input type='button' id="button-form" value='Enviar' />
 </form>
