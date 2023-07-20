@@ -1,10 +1,17 @@
 const socket = io() //lo cargo en un elementro script en el html
-const form = document.getElementById('formAddProduct')
-const formContainer = document.getElementById('form-container')
-formContainer.appendChild(form)
 
-const buttonForm = document.getElementById('button-form')
+const formAddContainer = document.getElementById('formAdd-container')
+const formAdd = document.getElementById('formAddProduct')
+formAddContainer.appendChild(formAdd)
+
+const formDeleteContainer = document.getElementById('formDelete-container')
+const formDel = document.getElementById('formDeleteProduct')
+formDeleteContainer.appendChild(formDel)
+
 const productContainner = document.getElementById('products')
+
+const buttonFormAdd = document.getElementById('button-formAdd') 
+const buttonFormDel = document.getElementById('button-formDel')  
 
 //socket escuchar evento de producto agregado
 socket.on('productAdded', (data) => {
@@ -45,28 +52,28 @@ socket.on('productDeleted', (data) => {
   }
 })
 
-//funcion para controlar el envio del form
-buttonForm.addEventListener('click', async (event) => {
+//funcion para controlar el envio del form de agregar producto
+buttonFormAdd.addEventListener('click', async (event) => {
   console.log('click')
-  const title = form.elements['title'].value
-  const description = form.elements['description'].value
-  const price = +form.elements['price'].value
-  const code = form.elements['code'].value
-  const stock = +form.elements['stock'].value
+  const title = formAdd.elements['title'].value
+  const description = formAdd.elements['description'].value
+  const price = +formAdd.elements['price'].value
+  const code = formAdd.elements['code'].value
+  const stock = +formAdd.elements['stock'].value
   const thumbnails = []
   thumbnails.push(
-    form.elements['thumbnails1'].value,
-    form.elements['thumbnails2'].value,
-    form.elements['thumbnails3'].value
+    formAdd.elements['thumbnails1'].value,
+    formAdd.elements['thumbnails2'].value,
+    formAdd.elements['thumbnails3'].value
   )
 
   let status
-  if (form.elements['status'].value === 'on') {
+  if (formAdd.elements['status'].value === 'on') {
     status = true
   } else {
     status = false
   }
-  const category = form.elements['category'].value
+  const category = formAdd.elements['category'].value
 
   const newProduct = {
     title,
@@ -89,11 +96,27 @@ buttonForm.addEventListener('click', async (event) => {
   })
 
   console.log(response)
-  form.elements['title'].value = ''
-  form.elements['description'].value = ''
-  form.elements['price'].value = 0
-  form.elements['code'].value = ''
-  form.elements['stock'].value = 0
-  form.elements['status'].value = true
-  form.elements['category'].value = ''
+  formAdd.elements['title'].value = ''
+  formAdd.elements['description'].value = ''
+  formAdd.elements['price'].value = 0
+  formAdd.elements['code'].value = ''
+  formAdd.elements['stock'].value = 0
+  formAdd.elements['status'].value = true
+  formAdd.elements['category'].value = ''
+})
+
+
+
+//funcion para controlar el envio del form de agregar producto
+buttonFormDel.addEventListener('click', async (event) => {
+  
+  const pid = +formDel.elements['id'].value
+  
+  const response = await fetch(`http://localhost:8080/api/products/${pid}`, {
+    method: 'DELETE'
+  })
+
+  console.log(response)
+  formDel.elements['id'].value = null
+
 })
