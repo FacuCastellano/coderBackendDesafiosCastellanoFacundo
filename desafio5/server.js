@@ -1,12 +1,16 @@
 require('dotenv').config({ path: './.env' })
 const http = require('http')
 const express = require('express')
-const { api, home } = require('./routes/mainRoutes')
 const path = require('path')
 const handlebars = require('express-handlebars')
 const { Server } = require('socket.io')
 const socketManager = require('./websocket')
 const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
+
+const { api, home } = require('./routes/mainRoutes')
 const puerto = process.env.PORT || 8080
 
 //settings del servidor / express /socket.io
@@ -23,8 +27,19 @@ app.set('view engine', 'handlebars') // setear handlebars como motor de plantill
 app.use('/static', express.static(path.join(__dirname + '/public')))
 
 //middelwares para dar formato a las request http
+
 app.use(express.urlencoded({ extended: true })) // --> dar formato a los parametros query
 app.use(express.json()) // -->para parsear el JSON enviados en el body
+app.use(cookieParser())
+app.use(session({
+  secret: process.env.SECRETO_SESSION,
+  resave: true,  //--> para que la session no caduque con el tiempo.
+  saveUninitialized:true, //-> para que guarde el obj session aun cuando este este vacio
+  store: new MongoStore({
+    mongoUrl:`mongodb+srv://${process.env.USER_ATLAS}:${process.env.PASS_ATLAS}@cluster0.xp1dk2t.mongodb.net/ecommerce?retryWrites=true&w=majority`,
+    ttl: 2*60 ///-->tiempo en segundos que mongo guarda los datos. 
+  })
+}))
 
 //inserto el io en la request.
 app.use((req, res, next) => {

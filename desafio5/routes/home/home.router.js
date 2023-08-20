@@ -1,47 +1,49 @@
 const { Router } = require('express')
 const router = Router()
-const productManager = require("../../dao/product.manager");
+const productManager = require('../../dao/product.manager')
 const cartManager = require('../../dao/cart.manager')
-
 
 //estas rutas no tienen prefijo (api) son las visualizaciones del home.
 
-router.get('/', async(req, res) => {
-  const {limit, page,sort,query} = req.query;
+router.get('/', async (req, res) => {
+  const { limit, page, sort, query } = req.query
   // isNaN(Valor), devuelve true si Valor no es parseable a tipo Number
   if (isNaN(limit) && limit !== undefined) {
     res.send({
-      status: "Error, the (limit) value is wrong",
+      status: 'Error, the (limit) value is wrong',
       payload: null,
-    });
-    return;
+    })
+    return
   }
   if (isNaN(page) && page !== undefined) {
     res.send({
-      status: "Error, the (page) value is wrong",
+      status: 'Error, the (page) value is wrong',
       payload: null,
-    });
-    return;
+    })
+    return
   }
-  const data = await productManager.getAllPaginated({limit,page,sort,query})
+  const data = await productManager.getAllPaginated({
+    limit,
+    page,
+    sort,
+    query,
+  })
 
   const products = []
-  data.payload.forEach(p => {
-    const {_id,title,description,price,category, ...rest} = p
-    const product = {id:_id.toString(),title,description,price,category}
+  data.payload.forEach((p) => {
+    const { _id, title, description, price, category, ...rest } = p
+    const product = { id: _id.toString(), title, description, price, category }
     products.push(product)
   })
 
-
   res.render('products', {
-
     products,
     route: {
-      page:data.page,
-      hasPrevPage:data.hasPrevPage,
-      hasNextPage:data.hasNextPage,
-      prevLink:data.prevLink,
-      nextLink:data.nextLink,      
+      page: data.page,
+      hasPrevPage: data.hasPrevPage,
+      hasNextPage: data.hasNextPage,
+      prevLink: data.prevLink,
+      nextLink: data.nextLink,
       hasCSS: true,
       cssFile: 'products.css',
       hasSocket: false,
@@ -53,21 +55,22 @@ router.get('/', async(req, res) => {
 
 //creo la ruta para listar los productos de un cart
 
-router.get('/carts/:cid', async(req, res) => {
-  const id = req.params.cid;
-  
+router.get('/carts/:cid', async (req, res) => {
+  const id = req.params.cid
+
   const data = await cartManager.getByIdProductsPopulate(id)
   const products = []
   let total = 0
 
-  data.products.forEach(p =>{
-    const element = `${p.product.title.toLowerCase()} ($ ${p.product.price} c/u) x ${p.qty} units = $ ${+p.qty * p.product.price} `
+  data.products.forEach((p) => {
+    const element = `${p.product.title.toLowerCase()} ($ ${
+      p.product.price
+    } c/u) x ${p.qty} units = $ ${+p.qty * p.product.price} `
     products.push(element)
     total += p.qty * p.product.price
   })
-  
-  res.render('carts', {
 
+  res.render('carts', {
     products,
     total,
     route: {
@@ -80,10 +83,7 @@ router.get('/carts/:cid', async(req, res) => {
   })
 })
 
-
-
-router.get('/chat', async(req, res) => {
-
+router.get('/chat', async (req, res) => {
   res.render('chat', {
     route: {
       hasCSS: true,
@@ -91,27 +91,26 @@ router.get('/chat', async(req, res) => {
       hasSocket: true,
       hasJsFile: true,
       jsFile: '/chat.js',
-      hasSwalt:true,
+      hasSwalt: true,
     },
   })
 })
 
 router.get('/realtimeproducts', async (req, res) => {
-
-  const { limit, page } = req.query;
+  const { limit, page } = req.query
   // isNaN(Valor), devuelve true si Valor no es parseable a tipo Number
   if (isNaN(limit) && limit !== undefined) {
     res.send({
-      status: "Error, the (limit) value is wrong",
+      status: 'Error, the (limit) value is wrong',
       payload: null,
-    });
-    return;
+    })
+    return
   }
   const productsRaw = await productManager.getAll({ limit, page })
   const products = []
-  productsRaw.forEach(p => {
-    const {_id,title,description,price,category, ...rest} = p
-    const product = {id:_id.toString(),title,description,price,category}
+  productsRaw.forEach((p) => {
+    const { _id, title, description, price, category, ...rest } = p
+    const product = { id: _id.toString(), title, description, price, category }
     products.push(product)
   })
 
@@ -119,7 +118,7 @@ router.get('/realtimeproducts', async (req, res) => {
     products,
     route: {
       hasCSS: true,
-      cssFile: "realtimeproducts.css",
+      cssFile: 'realtimeproducts.css',
       hasSocket: true,
       hasJsFile: true,
       jsFile: 'realtimeproducts.js',
@@ -127,40 +126,17 @@ router.get('/realtimeproducts', async (req, res) => {
   })
 })
 
-
 //sing-up (Get)
 router.get('/singup', async (req, res) => {
-
- 
-  
   res.render('singup', {
     route: {
       hasCSS: true,
-      cssFile: "singup.css",
+      cssFile: 'singup.css',
       hasSocket: true,
       hasJsFile: false,
       jsFile: null,
     },
   })
 })
-
-//sing-up (post)
-
-router.post('/singup', async (req, res) => {
-
-  console.log(req.body)
-   
-   res.render('singup', {
-     route: {
-       hasCSS: true,
-       cssFile: "singup.css",
-       hasSocket: true,
-       hasJsFile: false,
-       jsFile: null,
-     },
-   })
- })
-
-
 
 module.exports = router
