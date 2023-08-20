@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const router = Router(); //este objeto contendra todas las rutas de esta seccion, es lo que al final exporto.
 const productManager = require("../../dao/product.manager");
-const { eventNames } = require("../../dao/models/cart.model");
 
 // TODOAS LAS RUTAS QUE SIGUEN tienen por defecto el prefijo "/api/products"
 

@@ -127,4 +127,23 @@ router.get('/realtimeproducts', async (req, res) => {
   })
 })
 
+
+//register
+router.get('/register', async (req, res) => {
+
+ 
+  res.render('register', {
+    route: {
+      hasCSS: true,
+      cssFile: "register.css",
+      hasSocket: true,
+      hasJsFile: false,
+      jsFile: null,
+    },
+  })
+})
+
+
+
+
 module.exports = router
