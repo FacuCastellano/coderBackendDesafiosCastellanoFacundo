@@ -128,14 +128,15 @@ router.get('/realtimeproducts', async (req, res) => {
 })
 
 
-//register
-router.get('/register', async (req, res) => {
+//sing-up (Get)
+router.get('/singup', async (req, res) => {
 
  
-  res.render('register', {
+  
+  res.render('singup', {
     route: {
       hasCSS: true,
-      cssFile: "register.css",
+      cssFile: "singup.css",
       hasSocket: true,
       hasJsFile: false,
       jsFile: null,
@@ -143,6 +144,22 @@ router.get('/register', async (req, res) => {
   })
 })
 
+//sing-up (post)
+
+router.post('/singup', async (req, res) => {
+
+  console.log(req.body)
+   
+   res.render('singup', {
+     route: {
+       hasCSS: true,
+       cssFile: "singup.css",
+       hasSocket: true,
+       hasJsFile: false,
+       jsFile: null,
+     },
+   })
+ })
 
 
 
