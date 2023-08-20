@@ -8,10 +8,7 @@ const socketManager = require('./websocket')
 
 PORT = 8080
 
-//settings del servidor / express /socket.io
-const app = express()
-const server = http.createServer(app) // server http montado con express
-const io = new Server(server) // web socket montado en el http
+
 
 //settings del motor de plantilla
 app.engine('handlebars', handlebars.engine()) // registramos handlebars como motor de plantillas
@@ -28,7 +25,7 @@ app.use(express.json()) // -->para parsear el JSON enviados en el body
 
 //inserto el io en la request.
 app.use((req,res,next)=>{
-  req.io= io
+  req.io = io
   next()
 })
 
