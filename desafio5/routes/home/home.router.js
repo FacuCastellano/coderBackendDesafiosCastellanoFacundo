@@ -139,4 +139,19 @@ router.get('/singup', async (req, res) => {
   })
 })
 
+//log-in (Get)
+router.get('/login', async (req, res) => {
+  res.render('login', {
+    route: {
+      hasCSS: false,
+      cssFile: null,
+      hasSocket: true,
+      hasJsFile: false,
+      jsFile: null,
+    },
+  })
+})
+
+
+
 module.exports = router

@@ -36,7 +36,7 @@ router.post('/singup', async (req, res=response) => {
     }
 
     await userManager.add(userNew)
-    res.cookie("name", firstname, {maxAge: 10*1000} )
+    res.cookie("name", firstname, {maxAge: 10} )
     res.redirect("/")
     //res.send({ status: 'success', payload: req.body })
   } catch (err) {
@@ -44,5 +44,44 @@ router.post('/singup', async (req, res=response) => {
     console.log(err)
   }
 })
+
+router.post('/login', async (req, res=response) => {
+  try {
+
+    const { email, password, } = req.body
+    console.log("aca voy del body",email,password)
+    const user = await userManager.verifyUserPass({email,password})
+    if(!user){
+      console.log("usuario denegado")
+      res.status(401)
+      res.redirect('http://localhost:8080/login')
+    }
+
+    //console.log(user)
+    req.session.user = user
+    console.log(req.session)
+    
+    req.session.save((err)=>{
+      if(err){
+        console.log("error en el guardado de la session")
+        console.log(err)
+      }
+      
+    })
+    
+
+    //pass: wDfB4FUz
+    //mail: Merle22@yahoo.com 
+
+
+    //res.cookie("name", firstname, {maxAge: 10} )
+    res.end()
+    //res.send({ status: 'success', payload: req.body })
+  } catch (err) {
+    console.log('error en post user del session router')
+    console.log(err)
+  }
+})
+
 
 module.exports = router
