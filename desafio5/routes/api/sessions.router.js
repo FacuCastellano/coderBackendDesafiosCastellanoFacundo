@@ -96,5 +96,15 @@ router.get('/logout', async (req, res=response) => {
   }
 })
 
+router.get('/user/info', async (req, res=response) => {
+  try {    
+    res.send(req.session)
+  } catch (err) {
+    console.log('error en get /logout del session router')
+    console.log(err)
+  }
+})
+
+
 
 module.exports = router

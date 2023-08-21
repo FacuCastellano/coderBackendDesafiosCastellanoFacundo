@@ -61,7 +61,7 @@ router.get('/', isAuth, async (req = request, res = response) => {
 
 //creo la ruta para listar los productos de un cart
 
-router.get('/carts/:cid', async (req, res) => {
+router.get('/carts/:cid', isAuth, async (req, res) => {
   const id = req.params.cid
 
   const data = await cartManager.getByIdProductsPopulate(id)

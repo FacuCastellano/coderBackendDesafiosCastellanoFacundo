@@ -46,36 +46,45 @@ const getMessages = async function () {
 
 getMessages()
 
-async function mostrarAlerta() {
-  const { value: user } = await Swal.fire({
-    title: 'Ingrese su email',
-    input: 'email',
-    inputLabel: 'tu direccion de email',
-    inputPlaceholder: 'Ingrese su email',
-    inputAttributes: {
-      autocapitalize: 'off',
-    },
+//esta funcion manda un get() al la ruta especificada. y desde esta ruta con la cookie de session recupero los datos.
+const setUser = ()=>{
+  fetch('http://localhost:8080/api/sessions/user/info', {
+    method: 'GET',
   })
-
-  if (user) {
-    Swal.fire(`Seras llamado: ${user.split('@')[0]}`)
-  }
-
-  inputElement.addEventListener('keydown', function (event) {
-    if (
-      (event.code === 'Enter' || event.code === 'NumpadEnter ') &&
-      inputElement.value != ''
-    ) {
-
-      const msg = { user, message: inputElement.value, createdAt: new Date()  }
-      socket.emit('message', msg)
-      appendMessageElement(msg)
-      inputElement.value = ''
-    }
-  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Error en la solicitud')
+      }
+      return response.json()
+    })
+    .then((data) => {
+      const user = data.user.email
+      
+      if (user) {
+        Swal.fire(`Seras llamado: ${user.split('@')[0]}`)
+      }
+    
+      inputElement.addEventListener('keydown', function (event) {
+        if (
+          (event.code === 'Enter' || event.code === 'NumpadEnter ') &&
+          inputElement.value != ''
+        ) {
+    
+          const msg = { user, message: inputElement.value, createdAt: new Date()  }
+          socket.emit('message', msg)
+          appendMessageElement(msg)
+          inputElement.value = ''
+        }
+      })
+    })
+    .catch((error) => {
+      console.error(error)
+    })
 }
+setUser()
 
-mostrarAlerta()
+
+
 
 //aca recibo y pinto los msg de los otros clientes
 socket.on('message',(msg)=>{
