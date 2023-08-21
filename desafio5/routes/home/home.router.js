@@ -157,4 +157,24 @@ router.get('/login', async (req, res) => {
   })
 })
 
+router.get('/profile',isAuth,async(req,res)=>{
+  console.log(req.user)
+  
+  res.render('profile', {
+    user:req.user,
+    route: {
+      hasCSS: false,
+      cssFile: null,
+      hasSocket: true,
+      hasJsFile: false,
+      jsFile: null,
+    },
+  })
+
+})
+
+
+
+
+
 module.exports = router
