@@ -90,7 +90,7 @@ router.get('/carts/:cid', isAuth, async (req, res) => {
   })
 })
 
-router.get('/chat', async (req, res) => {
+router.get('/chat',isAuth, async (req, res) => {
   res.render('chat', {
     user:req.user,
     route: {

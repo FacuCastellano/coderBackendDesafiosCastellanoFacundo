@@ -7,6 +7,11 @@ class UserManager{
     return await userModel.create(user)
   }
 
+
+  async getById(id){
+    return await userModel.findById(id)
+  }
+
   async getByMail(mail){
     return await userModel.findOne({email: mail})
   }

@@ -95,10 +95,13 @@ router.get('/logout', async (req, res=response) => {
     console.log(err)
   }
 })
-
+//en esta ruta recupero los datos del usuario almacenado en el session de la cookie "connect.sid"
 router.get('/user/info', async (req, res=response) => {
   try {    
-    res.send(req.session)
+    
+    const {firstname,lastname,email} = await userManager.getById(req.session.user.id)
+    
+    res.send({firstname,lastname,email})
   } catch (err) {
     console.log('error en get /logout del session router')
     console.log(err)

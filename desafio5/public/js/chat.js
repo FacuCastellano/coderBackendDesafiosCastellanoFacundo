@@ -58,11 +58,10 @@ const setUser = ()=>{
       return response.json()
     })
     .then((data) => {
-      const user = data.user.email
-      
-      if (user) {
-        Swal.fire(`Seras llamado: ${user.split('@')[0]}`)
-      }
+      const {firstname, lastname, email} = data
+      const user = email
+      const fullname = firstname + " " + lastname
+      Swal.fire(`Hola ${fullname} !!\nBienvenido al Chat!`)
     
       inputElement.addEventListener('keydown', function (event) {
         if (
