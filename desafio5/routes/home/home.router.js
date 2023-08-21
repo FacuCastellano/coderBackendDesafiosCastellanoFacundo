@@ -157,8 +157,9 @@ router.get('/login', async (req, res) => {
   })
 })
 
+
+
 router.get('/profile',isAuth,async(req,res)=>{
-  console.log(req.user)
   
   res.render('profile', {
     user:req.user,

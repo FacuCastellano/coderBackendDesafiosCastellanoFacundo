@@ -2,6 +2,7 @@ const { Router } = require('express')
 const {response} =require('express')
 const router = Router() //este objeto contendra todas las rutas de esta seccion, es lo que al final exporto.
 const userManager = require('../../dao/user.manager')
+const isAuth = require('../../middelwares/userAuth')
 
 // TODOAS LAS RUTAS QUE SIGUEN tienen por defecto el prefijo "/api/sessions"
 
@@ -70,6 +71,27 @@ router.post('/login', async (req, res=response) => {
  
   } catch (err) {
     console.log('error en post user del session router')
+    console.log(err)
+  }
+})
+
+
+//deberia ser un post, pero para q me lo tome el <a></a>, lo uso en get.
+router.get('/logout', isAuth, async (req, res=response) => {
+  try {    
+
+    req.session.destroy((err)=>{
+      if(err){
+        res.status(500).send('Error al intentar destruir la session');
+        console.log(err)
+      }else{
+        res.clearCookie('connect.sid')
+        res.redirect('http://localhost:8080/login')
+      }
+    })
+
+  } catch (err) {
+    console.log('error en get /logout del session router')
     console.log(err)
   }
 })
