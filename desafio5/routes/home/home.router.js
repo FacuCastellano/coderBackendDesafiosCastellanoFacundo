@@ -41,6 +41,7 @@ router.get('/', isAuth, async (req = request, res = response) => {
   const fullname = req.user.firstname+" "+req.user.lastname
 
   res.render('products', {
+    user:req.user,
     fullname,
     products,
     route: {
@@ -76,6 +77,7 @@ router.get('/carts/:cid', async (req, res) => {
   })
 
   res.render('carts', {
+    user:req.user,
     products,
     total,
     route: {
@@ -90,6 +92,7 @@ router.get('/carts/:cid', async (req, res) => {
 
 router.get('/chat', async (req, res) => {
   res.render('chat', {
+    user:req.user,
     route: {
       hasCSS: true,
       cssFile: '/chat.css',

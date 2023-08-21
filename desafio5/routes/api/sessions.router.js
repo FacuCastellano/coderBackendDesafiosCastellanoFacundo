@@ -77,7 +77,7 @@ router.post('/login', async (req, res=response) => {
 
 
 //deberia ser un post, pero para q me lo tome el <a></a>, lo uso en get.
-router.get('/logout', isAuth, async (req, res=response) => {
+router.get('/logout', async (req, res=response) => {
   try {    
 
     req.session.destroy((err)=>{

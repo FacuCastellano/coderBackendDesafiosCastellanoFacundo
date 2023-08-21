@@ -4,12 +4,20 @@ const mongoose = require('mongoose')
 class CartManager {
   async createCart({ userId }) {
     console.log('pacuno el userId: ', userId)
-    await cartModel.create({ user: new mongoose.Types.ObjectId(userId) })
+    const info = await cartModel.create({ user: new mongoose.Types.ObjectId(userId) })
+    return info
   }
 
   async getById(id) {
     return await cartModel.findById(id)
   }
+
+  async getByUserId(id){
+    return await cartModel.findOne({user: new mongoose.Types.ObjectId(id)})
+  }
+
+
+
   //esta ruta busca el producto y lo aumenta en 1, o en cualquier cantidad pasada, si no existe lo crea y le pone el qty que corresponde.
   async getByIdAndAddProduct({ id, productId, qty = 1 }) {
     const cart = await cartModel.findById(id)

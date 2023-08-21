@@ -1,6 +1,20 @@
+function parseCookies() {
+  // le saque el parseCokkies tal cual al profe
+  return document.cookie
+    .split(';')
+    .reduce((obj, cookie) => {
+      const keyValue = cookie.split('=')
+      return {
+        ...obj,
+        [keyValue[0].trim()]: keyValue[1]
+      }
+    }, {})
+}
+
+const cookies = parseCookies()
 
 
-const cid = '64d522223398fe0ee7b278f8' //--> este valor se puede cambiar para probar que funciona en otros carritos.
+const cid = cookies.cartId //--> este valor corresponde al Id del carrito que le voy apegar con add-products
 
 
 Array.from(document.getElementsByClassName('card')).forEach((p) => {
