@@ -37,7 +37,7 @@ app.use(session({
   saveUninitialized:true, //-> para que guarde el obj session aun cuando este este vacio
   store: new MongoStore({
     mongoUrl:`mongodb+srv://${process.env.USER_ATLAS}:${process.env.PASS_ATLAS}@cluster0.xp1dk2t.mongodb.net/ecommerce?retryWrites=true&w=majority`,
-    ttl: 2*60 ///-->tiempo en segundos que mongo guarda los datos. 
+    ttl: 3600*24 ///-->tiempo en segundos que mongo guarda los datos. 
   })
 }))
 

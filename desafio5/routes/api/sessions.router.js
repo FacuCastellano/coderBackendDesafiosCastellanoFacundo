@@ -47,36 +47,27 @@ router.post('/singup', async (req, res=response) => {
 
 router.post('/login', async (req, res=response) => {
   try {
-
     const { email, password, } = req.body
-    console.log("aca voy del body",email,password)
-    const user = await userManager.verifyUserPass({email,password})
+    const user = await userManager.verifyUserPass({email:email.trim(),password})
+    //si user = false, lo redirijo al login
     if(!user){
       console.log("usuario denegado")
       res.status(401)
       res.redirect('http://localhost:8080/login')
+      return
     }
 
-    //console.log(user)
-    req.session.user = user
-    console.log(req.session)
-    
+    req.session.user = user  // si user tiene un valor, lo guardo en la session.
     req.session.save((err)=>{
       if(err){
-        console.log("error en el guardado de la session")
+        console.log("error en el guardado de la session, en la rotura (post) login del homerouter")
         console.log(err)
       }
       
     })
-    
 
-    //pass: wDfB4FUz
-    //mail: Merle22@yahoo.com 
-
-
-    //res.cookie("name", firstname, {maxAge: 10} )
-    res.end()
-    //res.send({ status: 'success', payload: req.body })
+    res.redirect('http://localhost:8080/')
+ 
   } catch (err) {
     console.log('error en post user del session router')
     console.log(err)

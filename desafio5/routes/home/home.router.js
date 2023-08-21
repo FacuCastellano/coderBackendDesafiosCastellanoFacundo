@@ -2,10 +2,12 @@ const { Router } = require('express')
 const router = Router()
 const productManager = require('../../dao/product.manager')
 const cartManager = require('../../dao/cart.manager')
+const { request, response } = require('express')
+const isAuth = require('../../middelwares/userAuth')
 
 //estas rutas no tienen prefijo (api) son las visualizaciones del home.
 
-router.get('/', async (req, res) => {
+router.get('/', isAuth, async (req = request, res = response) => {
   const { limit, page, sort, query } = req.query
   // isNaN(Valor), devuelve true si Valor no es parseable a tipo Number
   if (isNaN(limit) && limit !== undefined) {
@@ -36,7 +38,10 @@ router.get('/', async (req, res) => {
     products.push(product)
   })
 
+  const fullname = req.user.firstname+" "+req.user.lastname
+
   res.render('products', {
+    fullname,
     products,
     route: {
       page: data.page,
@@ -151,7 +156,5 @@ router.get('/login', async (req, res) => {
     },
   })
 })
-
-
 
 module.exports = router
