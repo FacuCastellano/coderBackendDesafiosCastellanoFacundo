@@ -48,7 +48,7 @@ router.post('/singup', async (req, res=response) => {
 
 router.post('/login', async (req, res=response) => {
   try {
-    const { email, password, } = req.body
+    const { email, password, } = req.body 
     const user = await userManager.verifyUserPass({email:email.trim(),password})
     //si user = false, lo redirijo al login
     if(!user){
@@ -59,6 +59,7 @@ router.post('/login', async (req, res=response) => {
     }
 
     req.session.user = user  // si user tiene un valor, lo guardo en la session.
+    req.session.user.role = "user"
     req.session.save((err)=>{
       if(err){
         console.log("error en el guardado de la session, en la rotura (post) login del homerouter")
@@ -100,7 +101,6 @@ router.get('/user/info', async (req, res=response) => {
   try {    
     
     const {firstname,lastname,email} = await userManager.getById(req.session.user.id)
-    
     res.send({firstname,lastname,email})
   } catch (err) {
     console.log('error en get /logout del session router')

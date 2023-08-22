@@ -15,25 +15,30 @@ const { response} = require('express')
 const isAuth = async (req, res=response, next) => {
   try {
     const email = req.session?.user?.email || null
-    if (!email) {
-      res.redirect('/login')
-      return //--> no tengo muy claro pq este return ess necesario (osea se q se evita q se envien multiples respuestas pero no lo cazo muy bien)
-    } else {
-      req.user = await userManager.getInfoByMail(email)
-      const userId =  new mongoose.Types.ObjectId(req.session.user.id)
-      const cart = await cartManager.getByUserId(userId)
-      if(!cart){
-        //si no tiene carrito le creo uno y recupero el cartId
-        const newCart = await cartManager.createCart({userId:req.session.user.id})
-        req.user.cart = newCart._id.toString()
-        
-      }else{
-        //si tiene carrito, recupero el cartId
-        req.user.cart = cart._id.toString()
-      }
+    
 
-      res.cookie('cartId',req.user.cart)
-    }
+      if (!email) {
+        res.redirect('/login')
+        return //--> no tengo muy claro pq este return ess necesario (osea se q se evita q se envien multiples respuestas pero no lo cazo muy bien)
+      } else {
+        req.user = await userManager.getInfoByMail(email)
+        const userId =  new mongoose.Types.ObjectId(req.session.user.id)
+        const cart = await cartManager.getByUserId(userId)
+        if(!cart){
+          //si no tiene carrito le creo uno y recupero el cartId
+          const newCart = await cartManager.createCart({userId:req.session.user.id})
+          req.user.cart = newCart._id.toString()
+          
+        }else{
+          //si tiene carrito, recupero el cartId
+          req.user.cart = cart._id.toString()
+        }
+  
+        res.cookie('cartId',req.user.cart)
+      }
+    
+    
+    
 
     next()
   } catch (err) {
