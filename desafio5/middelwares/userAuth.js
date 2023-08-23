@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const userManager = require('../dao/user.manager')
 const cartManager = require('../dao/cart.manager')
-const { response} = require('express')
+const { response } = require('express')
 //mail: Craig2@hotmail.com
 //pass: Om1zfU1k7hSB
 //cart: 64d522223398fe0ee7b278f8
@@ -10,35 +10,37 @@ const { response} = require('express')
 //pass: Ujh0Cm3lQFPg9o
 //cart: 64dd1ad318aef2b6cbe76f8e
 
-
-
-const isAuth = async (req, res=response, next) => {
+const isAuth = async (req, res = response, next) => {
   try {
     const email = req.session?.user?.email || null
-    
 
-      if (!email) {
-        res.redirect('/login')
-        return //--> no tengo muy claro pq este return ess necesario (osea se q se evita q se envien multiples respuestas pero no lo cazo muy bien)
+    if (!email) {
+      res.redirect('/login')
+      return //--> no tengo muy claro pq este return ess necesario (osea se q se evita q se envien multiples respuestas pero no lo cazo muy bien)
+    } else {
+      req.user = await userManager.getInfoByMail(email)
+      //esta validacion la hago aca por en handlebars no la puedo hacer, directamente le tengo q mandar el true o el false.
+      if (req.session.user.role === 'admin') {
+        req.user.isAdmin = true
       } else {
-        req.user = await userManager.getInfoByMail(email)
-        const userId =  new mongoose.Types.ObjectId(req.session.user.id)
-        const cart = await cartManager.getByUserId(userId)
-        if(!cart){
-          //si no tiene carrito le creo uno y recupero el cartId
-          const newCart = await cartManager.createCart({userId:req.session.user.id})
-          req.user.cart = newCart._id.toString()
-          
-        }else{
-          //si tiene carrito, recupero el cartId
-          req.user.cart = cart._id.toString()
-        }
-  
-        res.cookie('cartId',req.user.cart)
+        req.user.isAdmin = false
       }
-    
-    
-    
+      req.user.role = req.session.user.role
+      const userId = new mongoose.Types.ObjectId(req.session.user.id)
+      const cart = await cartManager.getByUserId(userId)
+      if (!cart) {
+        //si no tiene carrito le creo uno y recupero el cartId
+        const newCart = await cartManager.createCart({
+          userId: req.session.user.id,
+        })
+        req.user.cart = newCart._id.toString()
+      } else {
+        //si tiene carrito, recupero el cartId
+        req.user.cart = cart._id.toString()
+      }
+
+      res.cookie('cartId', req.user.cart)
+    }
 
     next()
   } catch (err) {

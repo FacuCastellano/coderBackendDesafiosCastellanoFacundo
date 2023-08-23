@@ -32,9 +32,11 @@
             <li class='uk-active'>
               <a href='/'>Home</a>
             </li>
-            {{!-- <li class='uk-active'>
-              <a href='/realtimeproducts'>Product Realtime</a>
-            </li> --}}
+            {{#if user.isAdmin}}  
+            <li class='uk-active'>
+              <a href='/realtimeproducts'>Product Realtime <span class="uk-form-danger"> |Only Admin|</span></a>
+            </li>
+            {{/if}}
             <li>
               <a href='/carts/{{user.cart}}'>Carrito<span
                   id='cart-badge'
