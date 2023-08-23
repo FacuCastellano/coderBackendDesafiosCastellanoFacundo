@@ -39,7 +39,7 @@ router.get('/', isAuth, async (req = request, res = response) => {
   })
 
   const fullname = req.user.firstname+" "+req.user.lastname
-  
+
   res.render('products', {
     user:req.user,
     fullname,
