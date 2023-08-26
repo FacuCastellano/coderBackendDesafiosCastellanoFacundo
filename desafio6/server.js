@@ -9,6 +9,9 @@ const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
+const passport = require('passport')
+const initPassportLocal = require('./config/passport.local.config')
+
 
 const { api, home } = require('./routes/mainRoutes')
 const puerto = process.env.PORT || 8080
@@ -41,11 +44,19 @@ app.use(session({
   })
 }))
 
+
 //inserto el io en la request.
 app.use((req, res, next) => {
   req.io = io
   next()
 })
+
+// registro de los middlewares de passport
+initPassportLocal()
+
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 //router de api
 app.use('/api', api)
