@@ -7,14 +7,7 @@ const LocalStrategy = local.Strategy
 
 
 const signup = async (req, email, password, done) => {
-  console.log("hola desde singup")
-  console.log(req.body)
-  console.log(email),
-  console.log(password) 
-  console.log(done)
-
   const { password: _password, password2: _password2, ...user } = req.body
-
   const _user = await userManager.getByMail(email)
 
   if (_user) {
@@ -27,11 +20,18 @@ const signup = async (req, email, password, done) => {
       ...user,
       password: hashPassword(_password)
     })
-    const {_id, password:_passHashiado, __v, ...userToRetorn} =  newUser._doc
-    console.log('--------')
-    console.log({id:_id.toString(), ...userToRetorn})
+    const {_id, password:_passHashiado, __v, ...rest} =  newUser._doc
+    //creo el rol
+    let role
+    if(userManager.email ===  "coderAdmin@gmail.com"){
+      role = "admin"
+    }else{
+      role = "user"
+    }
+    const userToRetorn = {id:_id.toString(), ...rest,role}
+    console.log(userToRetorn)
     // TODO: Borrar el password
-    return done(null, {id:_id.toString(), ...userToRetorn} )
+    return done(null, userToRetorn  )
 
   } catch(e) {
     console.log('ha ocurrido un error')
@@ -39,32 +39,31 @@ const signup = async (req, email, password, done) => {
   }
 }
 
-// const login = async (email, password, done) => {
-//   try {
-    
-//     const _user = await userManager.getByEmail(email)
+const login = async (email, password="", done) => {
+  try {
+    console.log("hola desde login")
+    const _user = await userManager.getByMail(email)
 
-//     if (!_user) {
-//       console.log('usuario no existe')
-//       return done(null, false)
-//     }
+    if (!_user) {
+      console.log('usuario no existe')
+      return done(null, false)
+    }
 
-//     if (!password) {
-//       return done(null, false)
-//     }
+    if (!isValidPassword(password, _user.password)) {
+      console.log('credenciales no coinciden')
+      return done(null, false)
+    }
 
-//     if (!isValidPassword(password, _user.password)) {
-//       console.log('credenciales no coinciden')
-//       return done(null, false)
-//     }
+    console.log(_user)
 
-//     // TODO: borrar password
-//     done(null, _user)
-//   } catch (e) {
-//     console.log('ha ocurrido un error')
-//     done(e, false)
-//   }
-// }
+
+    // TODO: borrar password
+    done(null, _user)
+  } catch (e) {
+    console.log('ha ocurrido un error')
+    done(e, false)
+  }
+}
 
 
 
@@ -75,12 +74,9 @@ const init = () => {
   passport.use(
     'local-signup',
     new LocalStrategy(
-      { usernameField: 'email', passReqToCallback: true },
-      signup
-    )
-  )
+      { usernameField: 'email', passReqToCallback: true }, signup))
 
-  // passport.use('local-login', new LocalStrategy({ usernameField: 'email' }, login))
+  passport.use('local-login', new LocalStrategy({ usernameField: 'email' }, login))
 
   passport.serializeUser((user, done) => {
     done(null, user.id)

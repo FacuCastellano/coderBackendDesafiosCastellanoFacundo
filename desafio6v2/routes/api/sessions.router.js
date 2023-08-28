@@ -12,39 +12,49 @@ router.post('/singup', passport.authenticate('local-signup', {
   failureRedirect: '/login'
 }) )
 
-router.post('/login', async (req, res=response) => {
-  try {
-    const { email, password, } = req.body
-    const user = await userManager.verifyUserPass({email:email.trim(),password})
-    //si user = false, lo redirijo al login
-    if(!user){
-      console.log("usuario denegado")
-      res.status(401)
-      res.redirect('http://localhost:8080/login')
-      return
-    }
-    
-    req.session.user = user  // si user tiene un valor, lo guardo en la session.
-    if(email === "adminCoder@coder.com"){
-      req.session.user.role = "admin"
-    }else{
-      req.session.user.role = "user"
-    }
-    req.session.save((err)=>{
-      if(err){
-        console.log("error en el guardado de la session, en la rotura (post) login del homerouter")
-        console.log(err)
-      }
-      
-    })
+router.post('/login', passport.authenticate('local-login', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}) )
 
-    res.redirect('http://localhost:8080/')
+
+
+
+
+
+// router.post('/login', async (req, res=response) => {
+//   try {
+//     const { email, password, } = req.body
+//     const user = await userManager.verifyUserPass({email:email.trim(),password})
+//     //si user = false, lo redirijo al login
+//     if(!user){
+//       console.log("usuario denegado")
+//       res.status(401)
+//       res.redirect('http://localhost:8080/login')
+//       return
+//     }
+    
+//     req.session.user = user  // si user tiene un valor, lo guardo en la session.
+//     if(email === "adminCoder@coder.com"){
+//       req.session.user.role = "admin"
+//     }else{
+//       req.session.user.role = "user"
+//     }
+//     req.session.save((err)=>{
+//       if(err){
+//         console.log("error en el guardado de la session, en la rotura (post) login del homerouter")
+//         console.log(err)
+//       }
+      
+//     })
+
+//     res.redirect('http://localhost:8080/')
  
-  } catch (err) {
-    console.log('error en post user del session router')
-    console.log(err)
-  }
-})
+//   } catch (err) {
+//     console.log('error en post user del session router')
+//     console.log(err)
+//   }
+// })
 
 
 //deberia ser un post, pero para q me lo tome el <a></a>, lo uso en get.
