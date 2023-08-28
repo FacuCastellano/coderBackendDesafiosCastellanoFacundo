@@ -9,7 +9,9 @@ const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
+const passport = require('passport')
 
+const initPassportLocal = require('./config/passport.local')
 const { api, home } = require('./routes/mainRoutes')
 const puerto = process.env.PORT || 8080
 
@@ -40,6 +42,15 @@ app.use(session({
     ttl: 3600*24 ///-->tiempo en segundos que mongo guarda los datos. 
   })
 }))
+
+//cargo las estrategias de passport.
+
+initPassportLocal()
+    
+app.use(passport.initialize())
+app.use(passport.session())
+
+
 
 //inserto el io en la request.
 app.use((req, res, next) => {
