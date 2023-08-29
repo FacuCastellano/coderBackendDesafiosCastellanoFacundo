@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 
 class CartManager {
   async createCart({ userId }) {
-    console.log('pacuno el userId: ', userId)
     const info = await cartModel.create({ user: new mongoose.Types.ObjectId(userId) })
     return info
   }

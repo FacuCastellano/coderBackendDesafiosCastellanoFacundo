@@ -1,5 +1,5 @@
 const userModel = require('./models/user.model')
-
+const cartManager = require('./cart.manager')
 
 class UserManager{
 
@@ -11,6 +11,33 @@ class UserManager{
   async getById(id){
     return await userModel.findById(id)
   }
+
+  async getByIdForPassport(userId){
+
+    const userRaw= await userModel.findById(userId).lean()
+    const {_id:idAsObj,__v,password, ...rest} = userRaw
+    const user = {...rest,id:idAsObj.toString()}
+
+    if(user.email === "adminCoder@coder.com"){
+      user.role = "admin"
+    }else{
+      user.role = "user"
+    }
+
+    const cart = await  cartManager.getByUserId(userId)
+    
+    let cartId
+    if(!cart){
+      const userCart = cartManager.createCart({userId})
+      cartId = userCart._id.toString()
+    }else{
+      cartId = cart._id.toString()
+    }
+    user.cart = cartId
+    
+    return user
+  }
+
 
   async getByMail(mail){
     return await userModel.findOne({email: mail})

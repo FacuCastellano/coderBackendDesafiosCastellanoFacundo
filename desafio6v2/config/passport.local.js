@@ -5,6 +5,22 @@ const { hashPassword, isValidPassword } = require('../utils/password.utils')
 
 const LocalStrategy = local.Strategy
 
+const setRole = (user)=>{
+
+  if(user.email ===  "coderAdmin@gmail.com"){
+    user.role= "admin"
+  }else{
+    user.role = "user"
+  }
+
+}
+
+// const setCart =(user)=>{
+
+// }
+
+
+
 
 const signup = async (req, email, password, done) => {
   const { password: _password, password2: _password2, ...user } = req.body
@@ -21,16 +37,11 @@ const signup = async (req, email, password, done) => {
       password: hashPassword(_password)
     })
     const {_id, password:_passHashiado, __v, ...rest} =  newUser._doc
-    //creo el rol
-    let role
-    if(userManager.email ===  "coderAdmin@gmail.com"){
-      role = "admin"
-    }else{
-      role = "user"
-    }
+    
     const userToRetorn = {id:_id.toString(), ...rest,role}
-    console.log(userToRetorn)
-    // TODO: Borrar el password
+  
+    setRole(userToRetorn)
+
     return done(null, userToRetorn  )
 
   } catch(e) {
@@ -54,10 +65,8 @@ const login = async (email, password="", done) => {
       return done(null, false)
     }
 
-    console.log(_user)
-
-
-    // TODO: borrar password
+    setRole(_user)
+    
     done(null, _user)
   } catch (e) {
     console.log('ha ocurrido un error')
@@ -82,9 +91,7 @@ const init = () => {
     done(null, user.id)
   })
   passport.deserializeUser(async (id, done) => {
-    const user = await userManager.getById(id)
-
-    // TODO: borrar el password
+    const user = await userManager.getByIdForPassport(id); //tuve que crear un metodo nuevo pq no puedo modificar el user, no se pq.
     done(null, user)
   })
 }

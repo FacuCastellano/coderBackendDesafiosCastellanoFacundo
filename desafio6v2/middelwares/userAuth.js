@@ -12,19 +12,12 @@ const { response } = require('express')
 
 function isAuth(req, res, next) {
   //req.isAuthenticated() will return true if user is logged in
-  if (req.isAuthenticated()) {
-    // if(req.user.email === "coderAdmin@gmail.com"){
-    //   console.log("entre 1")
-    //   req.user.role = "admin"
-    // }else{
-    //   console.log("entre 2")
-    //   req.user.role = "user"
-    //   console.log(req.user)
-    // }
-   
-
-    
+  if (req.isAuthenticated()) { 
+    console.log("-------a--------")
+    console.log(req.user)
+    console.log("-------a--------")
     next()
+
   } else {
     res.redirect('/login')
   }
