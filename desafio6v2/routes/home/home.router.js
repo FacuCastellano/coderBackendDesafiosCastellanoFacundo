@@ -38,10 +38,10 @@ router.get('/', isAuth, async (req = request, res = response) => {
     products.push(product)
   })
 
-  const fullname = req.user.firstname+" "+req.user.lastname
+  const fullname = req.user.firstname + ' ' + req.user.lastname
 
   res.render('products', {
-    user:req.user,
+    user: req.user,
     fullname,
     products,
     route: {
@@ -77,7 +77,7 @@ router.get('/carts/:cid', isAuth, async (req, res) => {
   })
 
   res.render('carts', {
-    user:req.user,
+    user: req.user,
     products,
     total,
     route: {
@@ -90,9 +90,9 @@ router.get('/carts/:cid', isAuth, async (req, res) => {
   })
 })
 
-router.get('/chat',isAuth, async (req, res) => {
+router.get('/chat', isAuth, async (req, res) => {
   res.render('chat', {
-    user:req.user,
+    user: req.user,
     route: {
       hasCSS: true,
       cssFile: '/chat.css',
@@ -160,12 +160,9 @@ router.get('/login', async (req, res) => {
   })
 })
 
-
-
-router.get('/profile',isAuth,async(req,res)=>{
-  
+router.get('/profile', isAuth, async (req, res) => {
   res.render('profile', {
-    user:req.user,
+    user: req.user,
     route: {
       hasCSS: false,
       cssFile: null,
@@ -174,11 +171,6 @@ router.get('/profile',isAuth,async(req,res)=>{
       jsFile: null,
     },
   })
-
 })
-
-
-
-
 
 module.exports = router

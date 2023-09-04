@@ -35,7 +35,7 @@ class UserManager{
     }else{
       cartId = cart._id.toString()
     }
-    user.cart = cartId
+    user.cartId = cartId
     
     return user
   }

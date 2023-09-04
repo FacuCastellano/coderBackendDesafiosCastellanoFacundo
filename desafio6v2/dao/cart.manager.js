@@ -16,27 +16,32 @@ class CartManager {
   }
 
 
-
   //esta ruta busca el producto y lo aumenta en 1, o en cualquier cantidad pasada, si no existe lo crea y le pone el qty que corresponde.
   async getByIdAndAddProduct({ id, productId, qty = 1 }) {
-    const cart = await cartModel.findById(id)
-    if (!cart) {
-      throw new Error('cart not found')
+    console.log(id,productId)
+    try{
+      const cart = await cartModel.findById(id)
+      if (!cart) {
+        throw new Error('cart not found')
+      }
+      const existentProduct = cart.products.find(
+        (p) => p.product.toString() === productId
+      ) //--> Trucazo: se puede buscar dentro de un documento en particular, y dentro de este a su vez dentro de una propiedad del mismo.
+  
+      if (existentProduct) {
+        existentProduct.qty += +qty //--> Esto queda "conectado" al documento al que pertenece (se pasa como referencia) entonces si actualizo esto actualizo el documento tm
+      } else {
+        cart.products.push({
+          product: new mongoose.Types.ObjectId(productId),
+          qty,
+        })
+      }
+      await cart.save()
+      return true
+    }catch(err){
+      console.log("error en getByIdAndAddProduct")
     }
-    const existentProduct = cart.products.find(
-      (p) => p.product.toString() === productId
-    ) //--> Trucazo: se puede buscar dentro de un documento en particular, y dentro de este a su vez dentro de una propiedad del mismo.
 
-    if (existentProduct) {
-      existentProduct.qty += +qty //--> Esto queda "conectado" al documento al que pertenece (se pasa como referencia) entonces si actualizo esto actualizo el documento tm
-    } else {
-      cart.products.push({
-        product: new mongoose.Types.ObjectId(productId),
-        qty,
-      })
-    }
-    await cart.save()
-    return true
   }
 
   async getByIdAndModifyProductQty({ id, productId, qty = 1 }) {
