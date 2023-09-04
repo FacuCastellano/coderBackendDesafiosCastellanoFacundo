@@ -52,8 +52,9 @@ router.get('/logout', async (req, res = response) => {
 //en esta ruta recupero los datos del usuario almacenado en el session de la cookie "connect.sid"
 router.get('/user/info', async (req, res = response) => {
   try {
+    
     const { firstname, lastname, email } = await userManager.getById(
-      req.session.user.id
+      req.user._id.toString() // no entiendo pq aca lo tengo que llamar como user._id.. y no como user.id.. y en la seriliazacion lo llamo como user.id
     )
 
     res.send({ firstname, lastname, email })
