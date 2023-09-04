@@ -11,55 +11,12 @@ const { response } = require('express')
 //cart: 64dd1ad318aef2b6cbe76f8e
 
 function isAuth(req, res, next) {
-  //req.isAuthenticated() will return true if user is logged in
   if (req.isAuthenticated()) { 
-    console.log("-------a--------")
-    console.log(req.user)
-    console.log("-------a--------")
+    console.log("usuer validated")
     next()
-
   } else {
     res.redirect('/login')
   }
 }
 
 module.exports = isAuth
-
-// const isAuth = async (req, res = response, next) => {
-//   try {
-//     const email = req.session?.user?.email || null
-//     if (!email) {
-//       res.redirect('/login')
-//       return //--> no tengo muy claro pq este return ess necesario (osea se q se evita q se envien multiples respuestas pero no lo cazo muy bien)
-//     } else {
-//       req.user = await userManager.getInfoByMail(email)
-//       req.user.role = req.session.user.role
-//       if (req.user.role === 'admin') {
-//         req.user.isAdmin = true
-//       } else {
-//         req.user.isAdmin = false
-//       }
-//       const userId = new mongoose.Types.ObjectId(req.session.user.id)
-//       const cart = await cartManager.getByUserId(userId)
-//       if (!cart) {
-//         //si no tiene carrito le creo uno y recupero el cartId
-//         const newCart = await cartManager.createCart({
-//           userId: req.session.user.id,
-//         })
-//         req.user.cart = newCart._id.toString()
-//       } else {
-//         //si tiene carrito, recupero el cartId
-//         req.user.cart = cart._id.toString()
-//       }
-
-//       res.cookie('cartId', req.user.cart)
-//     }
-
-//     next()
-//   } catch (err) {
-//     console.log('error en el middelware')
-//     console.log(err)
-//   }
-// }
-
-// module.exports = isAuth

@@ -20,8 +20,10 @@ class UserManager{
 
     if(user.email === "adminCoder@coder.com"){
       user.role = "admin"
+      user.isAdmin = true
     }else{
       user.role = "user"
+      user.isAdmin = false
     }
 
     const cart = await  cartManager.getByUserId(userId)

@@ -11,7 +11,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const passport = require('passport')
 
-const initPassportLocal = require('./config/passport.local')
+const initPassportLocal = require('./config/passport.init')
 const { api, home } = require('./routes/mainRoutes')
 const puerto = process.env.PORT || 8080
 
