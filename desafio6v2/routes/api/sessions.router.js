@@ -58,7 +58,7 @@ router.get('/user/info', async (req, res = response) => {
 
     res.send({ firstname, lastname, email })
   } catch (err) {
-    console.log('error en get /logout del session router')
+    console.log('error en get user/info del session router')
     console.log(err)
   }
 })
