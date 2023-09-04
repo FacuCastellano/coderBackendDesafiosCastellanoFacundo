@@ -6,6 +6,8 @@ const LocalStrategy = local.Strategy
 
 
 const signup = async (req, email, password, done) => {
+  
+  try {
   const { password: _password, password2: _password2, ...user } = req.body
   const _user = await userManager.getByMail(email)
 
@@ -14,17 +16,19 @@ const signup = async (req, email, password, done) => {
     return done(null, false)
   }
 
-  try {
+  
     const newUser = await userManager.add({
       ...user,
       password: hashPassword(_password)
     })
     
-    const {_id, password:_passHashiado, __v, ...rest} =  newUser._doc
+    console.log("newUser:",newUser)
     
-    const userToRetorn = {id:_id.toString(), ...rest,role}
-  
-    return done(null, userToRetorn )
+    // const {_id, password:_passHashiado, __v, ...rest} =  newUser._doc
+    
+    // const userToRetorn = {id:_id.toString(), ...rest,role}
+    
+    return done(null, newUser )
 
   } catch(e) {
     console.log('ha ocurrido un error')

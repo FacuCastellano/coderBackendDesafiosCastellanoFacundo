@@ -44,9 +44,12 @@ const init = () => {
   )
 
   passport.serializeUser((user, done) => {
+    console.log("entre al serialize")
+    console.log(user)
     done(null, user.id)
   })
   passport.deserializeUser(async (id, done) => {
+    console.log("deserealizando")
     const user = await userManager.getByIdForPassport(id) //tuve que crear un metodo nuevo pq no puedo modificar el user, no se pq.
     done(null, user)
   })

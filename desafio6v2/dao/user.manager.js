@@ -13,10 +13,11 @@ class UserManager{
   }
 
   async getByIdForPassport(userId){
-
+    console.log(userId)
     const userRaw= await userModel.findById(userId).lean()
-    const {_id:idAsObj,__v,password, ...rest} = userRaw
-    const user = {...rest,id:idAsObj.toString()}
+    const {__v,password, ...rest} = userRaw
+
+    const user = {...rest}
 
     if(user.email === "adminCoder@coder.com"){
       user.role = "admin"
@@ -30,7 +31,7 @@ class UserManager{
     
     let cartId
     if(!cart){
-      const userCart = cartManager.createCart({userId})
+      const userCart = await cartManager.createCart({userId})
       cartId = userCart._id.toString()
     }else{
       cartId = cart._id.toString()

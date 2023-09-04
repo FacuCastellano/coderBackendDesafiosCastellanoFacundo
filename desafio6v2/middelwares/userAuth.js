@@ -13,6 +13,7 @@ const { response } = require('express')
 function isAuth(req, res, next) {
   if (req.isAuthenticated()) { 
     console.log("usuer validated")
+    console.log(req.user)
     res.cookie("cartId",req.user.cartId)
     
     next()
