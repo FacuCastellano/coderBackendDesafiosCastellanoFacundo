@@ -11,12 +11,11 @@ const { response } = require('express')
 //cart: 64dd1ad318aef2b6cbe76f8e
 
 function isAuth(req, res, next) {
-  if (req.isAuthenticated()) { 
-    console.log("usuer validated")
-    console.log(req.user)
-    res.cookie("cartId",req.user.cartId)
-    
+  if (req.isAuthenticated()) {
+
+    res.cookie('cartId', req.user.cartId)
     next()
+    
   } else {
     res.redirect('/login')
   }

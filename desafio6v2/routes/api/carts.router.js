@@ -28,7 +28,7 @@ router.post('/', async (req = request, res) => {
 //cuando un user no logueado toque el boton carts, del navBar, va aentrar aca y se lo va a redicreccionar automatciamente.
 //con cuando un user logueado tocque ese boton va a entrar a carts/:cid
 router.get('/', async (req, res) => {
-  res.redirect("/")
+  res.send("ruta vacia")
 })
 
 

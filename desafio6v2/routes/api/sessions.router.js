@@ -25,9 +25,8 @@ router.post(
 router.get('/login/github',passport.authenticate('github', { scope: ['user:email'] }),(req, res) => {})
 
 
-router.get('/login/github/callback', passport.authenticate('github', { failureRedirect: '/login' }),
+router.get('/login/github/callback', passport.authenticate('github', { failureRedirect: '/singup' }),
   async (req, res) => {
-    console.log("hooola facundin")
     res.redirect('/')
   }
 )

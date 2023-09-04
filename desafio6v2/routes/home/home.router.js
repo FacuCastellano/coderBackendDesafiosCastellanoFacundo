@@ -60,6 +60,11 @@ router.get('/', isAuth, async (req = request, res = response) => {
 })
 
 //creo la ruta para listar los productos de un cart
+router.get('/carts/', async (req, res) => {
+  res.redirect('/')
+})
+
+
 
 router.get('/carts/:cid', isAuth, async (req, res) => {
   const id = req.params.cid

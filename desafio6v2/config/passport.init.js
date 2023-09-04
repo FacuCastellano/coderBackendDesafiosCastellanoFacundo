@@ -25,6 +25,7 @@ const init = () => {
   passport.use(
     new GitHubStrategy(
       {
+        //no los pongo en el .env para que may no tenga q modificar nada
         clientID: 'Iv1.e9ca21c39d56db6f',
         clientSecret: '3a6d83123b1a785fa54f6ce1be7d76965ee918fd',
         callbackURL: 'http://localhost:8080/api/sessions/login/github/callback',
@@ -35,8 +36,9 @@ const init = () => {
         const _user= await userManager.getByMail(email)
         console.log(_user)
         if(!_user){
-          //ver que pasa cuando user no existe
-          console.log("user not exist")
+          console.log("esa cuenta de github no esta registrada.")
+          done(null,false)
+          return
         }
         done(null,_user)
       }
@@ -44,8 +46,7 @@ const init = () => {
   )
 
   passport.serializeUser((user, done) => {
-    console.log("entre al serialize")
-    console.log(user)
+    console.log("serializando")
     done(null, user.id)
   })
   passport.deserializeUser(async (id, done) => {
