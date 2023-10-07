@@ -11,7 +11,7 @@ const RoutePolices = require('../../middelwares/routes.polices')
 //tmb adimite un query param "page", para poder hacer paginacion, si no esta trae la primera pagina.
 router.get('/', ProductController.getAll)
 
-//Nota: la ruta6, la tengo que poner antes q la ruta2, pq sino nunca entra la ruta6, ya que (:pid) es un comodin, y va a buscar el producto con id="mockingproducts"
+//Nota: la ruta6, debe ir antes q la ruta2, ya que sino (:pid) es un comodin, y va a buscar el producto con id="mockingproducts" (nunca entraria a esta si va despues)
 //ruta 6, ruta get para obtener 100 productos random
 router.get('/mockingproducts', ProductController.getMockersProducts)
 

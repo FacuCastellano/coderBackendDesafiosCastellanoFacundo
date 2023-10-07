@@ -72,6 +72,18 @@ app.use('/api', api)
 //router del home
 app.use('/', home)
 
+//seteo un middelware de errores
+app.use((err, req, res, next) => {
+  console.log('error!!')
+  console.log(err.message)
+
+  res.send({
+    success: false,
+    error: err.stack
+  })
+})
+
+
 //seteo para q el socket-io, 
 //aca seteo el io, para que use passport, y meterle el user, en las peticiones.
 io.use(
