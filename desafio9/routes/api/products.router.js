@@ -11,6 +11,10 @@ const RoutePolices = require('../../middelwares/routes.polices')
 //tmb adimite un query param "page", para poder hacer paginacion, si no esta trae la primera pagina.
 router.get('/', ProductController.getAll)
 
+//Nota: la ruta6, la tengo que poner antes q la ruta2, pq sino nunca entra la ruta6, ya que (:pid) es un comodin, y va a buscar el producto con id="mockingproducts"
+//ruta 6, ruta get para obtener 100 productos random
+router.get('/mockingproducts', ProductController.getMockersProducts)
+
 //ruta 2, trae le producto cuyo id se le pase como Url Param.
 router.get('/:pid', ProductController.getOne)
 
@@ -22,5 +26,6 @@ router.patch('/:pid',RoutePolices.onlyAdmin,ProductController.updatePropierties)
 
 //ruta 5, ruta post para eliminar producto
 router.delete('/:pid',RoutePolices.onlyAdmin, ProductController.deleteProduct)
+
 
 module.exports = router

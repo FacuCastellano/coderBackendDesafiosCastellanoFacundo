@@ -1,8 +1,9 @@
 const { factoryManager } = require('../config/process.config')
+const productsMocker = require('../utils/mocking.products')
 const productManager = factoryManager.productManager
 
+
 class ProductController {
-  
   // acepta un query parm "limit", que limita la cantidad de productos, si no esta este limite, se traen todos los productos.
   //tmb adimite un query param "page", para poder hacer paginacion, si no esta trae la primera pagina.
   static getAll = async (req, res) => {
@@ -98,6 +99,15 @@ class ProductController {
         return
       }
       res.status(404).send({ status: `error, product not found` })
+      return
+    } catch (err) {
+      res.send({ status: 'Error', 'Error type': err.message })
+    }
+  }
+
+  static getMockersProducts = async (req, res) => {
+    try {
+      res.status(200).send({ status: 'success', payload: productsMocker(100) })
       return
     } catch (err) {
       res.send({ status: 'Error', 'Error type': err.message })
