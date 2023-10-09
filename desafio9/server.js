@@ -74,17 +74,18 @@ app.use('/', home)
 
 //seteo un middelware de errores
 app.use((err, req, res, next) => {
-  console.log('error!!')
-  console.log(err.message)
-
-  res.send({
+  console.log('Se origino un error: ',err.message)
+  //console.log(err)
+  
+  res.status(500).send({
     success: false,
-    error: err.stack
+    error: err.message,
+    errorType: err.type,
+    errorTrigger: err.place,
   })
 })
 
-
-//seteo para q el socket-io, 
+//seteo para q el socket-io,
 //aca seteo el io, para que use passport, y meterle el user, en las peticiones.
 io.use(
   passportSocketIo.authorize({
@@ -95,9 +96,7 @@ io.use(
     //success: onAuthorizeSuccess, // *optional* callback on success - read more below
     //fail: onAuthorizeFail, // *optional* callback on fail/error - read more below
   })
-)
-/
-io.use(SocketPolices.prueba) //aca podria meter middelwares en las peticiones de socketIo, aunque ahora esta al vicio.
+) / io.use(SocketPolices.prueba) //aca podria meter middelwares en las peticiones de socketIo, aunque ahora esta al vicio.
 io.on('connection', socketManager)
 
 //IIFE para poder usar el await en la coneccion de mongo y conectar a mongo atlas antes levantar el servidor

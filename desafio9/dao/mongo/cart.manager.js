@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const BaseManager = require('./base.manager')
 const cartModel = require('./models/cart.model')
+const { CustomError, ErrorType } = require('../../errors/custom.error')
 
 class CartManager extends BaseManager {
   constructor() {
@@ -17,7 +18,7 @@ class CartManager extends BaseManager {
     try {
       const cart = await this.model.findById(id)
       if (!cart) {
-        throw new Error('cart not found')
+        throw new CustomError('cart not found',ErrorType.DB)
       }
       const existentProduct = cart.products.find(
         (p) => p.product.toString() === productId
@@ -34,7 +35,7 @@ class CartManager extends BaseManager {
       await cart.save()
       return true
     } catch (err) {
-      console.log('error en getByIdAndAddProduct')
+      //console.log('error en getByIdAndAddProduct')
     }
   }
 
@@ -51,7 +52,7 @@ class CartManager extends BaseManager {
       console.log(
         'Error en el metodo getByIdAndModifyProductQty(), del cartManager'
       )
-      console.log(e)
+      //console.log(e)
     }
   }
 
@@ -95,7 +96,7 @@ class CartManager extends BaseManager {
         })
       //.populate({path:'user',select:['firstname','lastname','email','address']}) --> NO ANDA NO SE PQ ! :-(
     } catch (err) {
-      console.log(err)
+      //console.log(err)
     }
   }
 

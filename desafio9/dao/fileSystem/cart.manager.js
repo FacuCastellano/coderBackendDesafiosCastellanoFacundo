@@ -46,7 +46,7 @@ class CartManager extends BaseManager {
       return true
     } catch (err) {
       console.log('error en getByIdAndAddProduct del fileSystem')
-      console.log(err)
+      //console.log(err)
     }
   }
 }

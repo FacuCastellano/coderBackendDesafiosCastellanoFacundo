@@ -9,7 +9,7 @@
     "dev": "nodemon server.js -m mongo",
     "dev-mg-dev": "nodemon server.js -m mongo -db Dev",
     "dev-fs": "nodemon server.js -m fileSystem -db FS",
-    "asd": "node ./utils/mocking.products.js",
+    "asd": "node prueba.js",
     "seed:products": "node ./scripts/seed.products.js",
     "seed:users": "node ./scripts/seed.users.js",
     "seed:carts": "node ./scripts/seed.carts.js",
