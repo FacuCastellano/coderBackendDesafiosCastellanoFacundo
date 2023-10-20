@@ -1,5 +1,10 @@
-console.log('estoy ejecutando el logger')
-const { enviroment } = require('../config/process.config')
+
+const { enviroment } = require('../config/process.config.enviroment') 
+
+const format =  winston.format.printf(({ level, message, timestamp }) => {
+  return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+});
+
 const {
   createLogger,
   transports: { Console, File },
@@ -42,7 +47,7 @@ const logger = createLogger({
     }),
     new File({
       filename: `./logs/${enviroment ? enviroment : 'others'}/error.log`,
-      level: 'info',
+      level: 'error',
       format: simple(),
     }),
   ],

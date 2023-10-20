@@ -3,6 +3,7 @@ const BaseManager = require('./base.manager')
 const cartModel = require('./models/cart.model')
 const { CustomError, ErrorType } = require('../../errors/custom.error')
 const logger = require('../../logger')
+const fs = require('fs')
 
 class CartManager extends BaseManager {
   constructor() {
@@ -15,12 +16,10 @@ class CartManager extends BaseManager {
 
   //esta ruta busca el producto y lo aumenta en 1, o en cualquier cantidad pasada, si no existe lo crea y le pone el qty que corresponde.
   async getByIdAndAddProduct({ id, productId, qty = 1 }) {
-    
     try {
       const cart = await this.model.findById(id)
       if (!cart) {
-        await logger.error(`cart not found - Date:[${(new Date()).toISOString}]`)
-        throw new CustomError('cart not found',ErrorType.DB)
+        throw new CustomError('cart not found', ErrorType.DB)
       }
       const existentProduct = cart.products.find(
         (p) => p.product.toString() === productId
@@ -37,7 +36,7 @@ class CartManager extends BaseManager {
       await cart.save()
       return true
     } catch (err) {
-      //console.log('error en getByIdAndAddProduct')
+      logger.error(err.message)
     }
   }
 
@@ -51,11 +50,13 @@ class CartManager extends BaseManager {
         { $set: { 'products.$.qty': qty } } // --> El operador ($) representa el índice del elemento coincidente en el array.
       )
     } catch (e) {
-      await logger.error(`'Error en el metodo getByIdAndModifyProductQty(), del cartManager' - Date:[${(new Date()).toISOString}]`)
-      // console.log(
-      //   'Error en el metodo getByIdAndModifyProductQty(), del cartManager'
-      // )
-      //console.log(e)
+      logger.error(
+        `${
+          err.message
+        }file: ${__filename} - function: getByIdAndModifyProductQty - Date:${
+          new Date().toISOString
+        }`
+      )
     }
   }
 
@@ -91,20 +92,21 @@ class CartManager extends BaseManager {
 
   async getByIdProductsPopulate(id) {
     try {
-      return await cartModel
-        .findById(id)
-        .populate({
-          path: 'products.product',
-          select: ['title', 'price', 'stock'],
-        })
+      return await cartModel.findById(id).populate({
+        path: 'products.product',
+        select: ['title', 'price', 'stock'],
+      })
       //.populate({path:'user',select:['firstname','lastname','email','address']}) --> NO ANDA NO SE PQ ! :-(
     } catch (err) {
-      //console.log(err)
+      logger.error(
+        `${
+          err.message
+        }file: ${__filename} - function: getByIdProductsPopulate - Date:${
+          new Date().toISOString
+        }`
+      )
     }
   }
-
-
-
 }
 
 module.exports = new CartManager()

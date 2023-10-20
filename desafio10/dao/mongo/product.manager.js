@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const BaseManager = require('./base.manager')
 const productModel = require('./models/product.model')
-const logger =require('../../logger')
+const logger = require('../../logger')
+const fs = require('fs')
 //const db = require("../config/connection.mongo");
 
 class ProductManager extends BaseManager {
@@ -21,8 +22,12 @@ class ProductManager extends BaseManager {
           .skip((page - 1) * limit)
       }
     } catch (e) {
-      await logger.error(`Error en el metodo getAll() del ProductManager - Date:[${(new Date()).toISOString}]`)
-      //console.log('Error en el metodo getAll() del ProductManager')
+      logger.error(
+        `${e.message}file: ${__filename} - function: getAll() - Date:${
+          new Date().toISOString
+        }`
+      )
+      // console.log('Error en el metodo getAll() del ProductManager')
     }
   }
 
@@ -48,7 +53,6 @@ class ProductManager extends BaseManager {
       }
 
       if (data) {
-        
         const { docs, totalDocs, pagingCounter, limit, paginCounter, ...rest } =
           data
         resp = {
@@ -90,10 +94,13 @@ class ProductManager extends BaseManager {
       }
       return resp
     } catch (e) {
-      await logger.error(`Error en el metodo getAllPaginated del ProductManager - Date:[${(new Date()).toISOString}]`)
-      //console.log('Error en el metodo getAllPaginated del ProductManager')
-      await logger.info(e.message)
-      //console.log(e)
+      logger.error(
+        `${e.message}file: ${__filename} - function: getAllPaginated() - Date:${
+          new Date().toISOString
+        }`
+      )
+      // console.log('Error en el metodo getAllPaginated del ProductManager')
+      // console.log(e)
     }
   }
 }

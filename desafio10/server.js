@@ -1,5 +1,6 @@
 const { mongoUri, clusterInfo } = require('./config/process.config')
 //require('dotenv').config({ path: './.env' }) // lo estoy ejecutando en el archivo de config.process
+console.log('linea 3 del server')
 const http = require('http')
 const express = require('express')
 const path = require('path')
