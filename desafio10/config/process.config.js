@@ -31,6 +31,8 @@ const { p: port, mode, database, enviroment } = program.opts()
 
 if(!(enviroment === 'development' ||enviroment === 'production')){
   logger.error(`wrong eviroment can't be "${enviroment}" `)
+  //no se pq no puedo hacer logger.fatal() no me lo reconoce
+  
   process.exit(1) // mato el proceso
 }
 process.env.PORT = port
