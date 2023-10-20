@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon server.js -m mongo",
+    "dev": "nodemon server.js -m mongo -env development",
+    "devError": "node server.js -env cualquiercosa",
     "dev-mg-dev": "nodemon server.js -m mongo -db Dev",
     "dev-fs": "nodemon server.js -m fileSystem -db FS",
     "asd": "node prueba.js",
@@ -37,7 +38,8 @@
     "simple-faker": "^0.0.61",
     "socket.io": "^4.7.2",
     "sweetalert2": "^11.7.22",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",

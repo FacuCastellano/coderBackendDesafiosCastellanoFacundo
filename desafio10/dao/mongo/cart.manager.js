@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const BaseManager = require('./base.manager')
 const cartModel = require('./models/cart.model')
 const { CustomError, ErrorType } = require('../../errors/custom.error')
+const logger = require('../../logger')
 
 class CartManager extends BaseManager {
   constructor() {
@@ -18,6 +19,7 @@ class CartManager extends BaseManager {
     try {
       const cart = await this.model.findById(id)
       if (!cart) {
+        await logger.error(`cart not found - Date:[${(new Date()).toISOString}]`)
         throw new CustomError('cart not found',ErrorType.DB)
       }
       const existentProduct = cart.products.find(
@@ -49,9 +51,10 @@ class CartManager extends BaseManager {
         { $set: { 'products.$.qty': qty } } // --> El operador ($) representa el índice del elemento coincidente en el array.
       )
     } catch (e) {
-      console.log(
-        'Error en el metodo getByIdAndModifyProductQty(), del cartManager'
-      )
+      await logger.error(`'Error en el metodo getByIdAndModifyProductQty(), del cartManager' - Date:[${(new Date()).toISOString}]`)
+      // console.log(
+      //   'Error en el metodo getByIdAndModifyProductQty(), del cartManager'
+      // )
       //console.log(e)
     }
   }

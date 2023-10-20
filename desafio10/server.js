@@ -5,7 +5,6 @@ const express = require('express')
 const path = require('path')
 const handlebars = require('express-handlebars')
 const { Server } = require('socket.io')
-
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
@@ -15,6 +14,8 @@ const passportSocketIo = require('passport.socketio')
 const initPassportLocal = require('./config/passport.init')
 const socketManager = require('./websocket')
 const SocketPolices = require('./middelwares/socket.polices')
+const logger = require('./logger')
+const loggerMiddleware = require('./middelwares/logger.http')
 const { api, home } = require('./routes/mainRoutes')
 const puerto = process.env.PORT || 8080
 
@@ -23,6 +24,8 @@ const app = express()
 const server = http.createServer(app) // server http montado con express
 const io = new Server(server) // web socket montado en el http
 
+//hago el log de las solicitudes
+app.use(loggerMiddleware)
 //settings del motor de plantilla
 app.engine('handlebars', handlebars.engine()) // registramos handlebars como motor de plantillas
 app.set('views', path.join(__dirname, '/views')) // el setting 'views' = directorio de vistas
@@ -74,7 +77,7 @@ app.use('/', home)
 
 //seteo un middelware de errores
 app.use((err, req, res, next) => {
-  console.log('Se origino un error: ',err.message)
+   logger.error(`Se origino un error: ${err.message}`)
   //console.log(err)
   
   res.status(500).send({

@@ -1,3 +1,4 @@
+const logger = require('../logger')
 function isAuth(req, res, next) {
 
   //console.log(req.user)
@@ -8,7 +9,7 @@ function isAuth(req, res, next) {
     res.cookie('cartId', req.user.cartId)
     next()
   } else {
-    console.log('te voy a redireccionar')
+    logger.http('usuario no logueado - redireccionando a /login')
     res.redirect('/login')
   }
 }

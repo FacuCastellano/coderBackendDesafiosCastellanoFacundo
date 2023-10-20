@@ -1,5 +1,7 @@
+console.log('estoy ejecutando el process.config')
 const { Command } = require('commander')
 require('dotenv').config({ path: './.env' })
+
 //importo todos los managers para el DAO de mongo
 
 const userManagerMongo = require('../dao/mongo/user.manager')
@@ -20,10 +22,12 @@ program
   .option('-m,--mode <dao>', 'DAO selected', 'mongo')
   .option('-db,--database <database>', 'database extension selected', '')
   .option('-p <port>', 'selected port', 8080)
+  .option('-env,--enviroment <enviroment>', 'enviroment deployed', 'production')
 
 program.parse() //esta parsea a variables las seteadas arriba
-const { p: port, mode, database } = program.opts()
+const { p: port, mode, database, enviroment } = program.opts()
 
+console.log(enviroment)
 process.env.PORT = port
 //seteo la base de datos que voy a usar
 const mongoUri = `mongodb+srv://${process.env.USER_ATLAS}:${process.env.PASS_ATLAS}@cluster0.xp1dk2t.mongodb.net/ecommerce${database}?retryWrites=true&w=majority`
@@ -57,4 +61,6 @@ module.exports = {
   clusterInfo,
   mongoUri,
   factoryManager: new FactoryManger(),
+  enviroment,
 }
+console.log('termine el  process.config')
