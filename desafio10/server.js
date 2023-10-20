@@ -77,7 +77,7 @@ app.use('/', home)
 
 //seteo un middelware de errores
 app.use((err, req, res, next) => {
-  logger.error(`Se origino un error: ${err.message}`)
+  logger.error(err.message)
   //console.log(err)
 
   res.status(500).send({

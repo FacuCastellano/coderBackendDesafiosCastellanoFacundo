@@ -2,8 +2,7 @@ const mongoose = require('mongoose')
 const BaseManager = require('./base.manager')
 const cartModel = require('./models/cart.model')
 const { CustomError, ErrorType } = require('../../errors/custom.error')
-const logger = require('../../logger')
-const fs = require('fs')
+
 
 class CartManager extends BaseManager {
   constructor() {
@@ -36,7 +35,7 @@ class CartManager extends BaseManager {
       await cart.save()
       return true
     } catch (err) {
-      logger.error(err.message)
+      throw new Error(err.message)
     }
   }
 
@@ -49,14 +48,8 @@ class CartManager extends BaseManager {
         },
         { $set: { 'products.$.qty': qty } } // --> El operador ($) representa el índice del elemento coincidente en el array.
       )
-    } catch (e) {
-      logger.error(
-        `${
-          err.message
-        }file: ${__filename} - function: getByIdAndModifyProductQty - Date:${
-          new Date().toISOString
-        }`
-      )
+    } catch (err) {
+      throw new Error(err.message)
     }
   }
 
@@ -98,13 +91,7 @@ class CartManager extends BaseManager {
       })
       //.populate({path:'user',select:['firstname','lastname','email','address']}) --> NO ANDA NO SE PQ ! :-(
     } catch (err) {
-      logger.error(
-        `${
-          err.message
-        }file: ${__filename} - function: getByIdProductsPopulate - Date:${
-          new Date().toISOString
-        }`
-      )
+      throw new Error(err.message)
     }
   }
 }

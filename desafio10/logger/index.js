@@ -45,7 +45,7 @@ const logger = createLogger({
       ),
     }),
     new File({
-      filename: `./logs/${enviroment ? enviroment : 'others'}/error.log`,
+      filename: `./logs/error.log`,
       level: 'error', // 'error'
       format: combine(
         simple(),

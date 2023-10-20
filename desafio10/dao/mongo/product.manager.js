@@ -21,12 +21,8 @@ class ProductManager extends BaseManager {
           .limit(limit)
           .skip((page - 1) * limit)
       }
-    } catch (e) {
-      logger.error(
-        `${e.message}file: ${__filename} - function: getAll() - Date:${
-          new Date().toISOString
-        }`
-      )
+    } catch (err) {
+      throw new Error(err.message)
       // console.log('Error en el metodo getAll() del ProductManager')
     }
   }
@@ -93,27 +89,10 @@ class ProductManager extends BaseManager {
         }
       }
       return resp
-    } catch (e) {
-      logger.error(
-        `${e.message}file: ${__filename} - function: getAllPaginated() - Date:${
-          new Date().toISOString
-        }`
-      )
-      // console.log('Error en el metodo getAllPaginated del ProductManager')
-      // console.log(e)
+    } catch (err) {
+      throw new Error(err.message)
     }
   }
 }
 
-module.exports = new ProductManager() //singleton --> siempre exporto una misma instancia de clase.
-
-// setTimeout(async () => {
-//   const PM = new ProductManager()
-//   const products = await PM.getAllPaginated({
-//     limit: 2,
-//     page: 3,
-//     sort: 'asc',
-//      query: '{ "price": { "$gte": 10 } }', // no anda cuando devuelvo el query
-//   })
-//   console.log(products)
-// }, 3000)
+module.exports = new ProductManager() //singleton --> siempre exporto una misma 

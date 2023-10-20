@@ -1,7 +1,5 @@
-const logger = require('../../logger')
-const fs = require('fs')
+
 class BaseManager {
-  
   constructor(model) {
     this.model = model
     // this.a = function () {
@@ -9,7 +7,7 @@ class BaseManager {
     // }
     // this.a()
   }
-  
+
   async add(entity) {
     return await this.model.create(entity)
   }
@@ -19,18 +17,7 @@ class BaseManager {
   }
 
   async getById(id) {
-    const entity = await this.model.findById(id)
-    if(!entity){
-      logger.error(
-        `${
-          err.message
-        }file: ${__filename} - function: getById - Date:${
-          new Date().toISOString
-        }`
-      )
-    return null
-    }
-    return entity
+    return await this.model.findById(id)
   }
 
   async updateById(id, entityUpdated) {

@@ -1,5 +1,7 @@
 const { Command } = require('commander')
 require('dotenv').config({ path: './.env' })
+const logger = require('../logger/index')
+
 
 //importo todos los managers para el DAO de mongo
 
@@ -27,6 +29,10 @@ program
 program.parse() //esta parsea a variables las seteadas arriba
 const { p: port, mode, database, enviroment } = program.opts()
 
+if(!(enviroment === 'development' ||enviroment === 'production')){
+  logger.error(`wrong eviroment can't be "${enviroment}" `)
+  process.exit(1) // mato el proceso
+}
 process.env.PORT = port
 //seteo la base de datos que voy a usar
 const mongoUri = `mongodb+srv://${process.env.USER_ATLAS}:${process.env.PASS_ATLAS}@cluster0.xp1dk2t.mongodb.net/ecommerce${database}?retryWrites=true&w=majority`
