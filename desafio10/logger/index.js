@@ -1,15 +1,8 @@
-
-const { enviroment } = require('../config/process.config.enviroment') 
-
-const format =  winston.format.printf(({ level, message, timestamp }) => {
-  return `${timestamp} [${level.toUpperCase()}]: ${message}`;
-});
-
-const {
-  createLogger,
-  transports: { Console, File },
-  format: { combine, colorize, simple },
-} = require('winston')
+const { enviroment } = require('../config/process.config.enviroment')
+const winston = require('winston')
+const { createLogger } = winston
+const { Console, File } = winston.transports
+const { combine, timestamp, printf, colorize, align, simple } = winston.format
 
 console.log('valor de enviroment:', enviroment)
 let consoleLevel
@@ -43,14 +36,28 @@ const logger = createLogger({
   transports: [
     new Console({
       level: consoleLevel,
-      format: combine(colorize({ colors: options.colors }), simple()),
+      format: combine(
+        colorize({ colors: options.colors }),
+        timestamp({
+          format: 'YYYY-MM-DD hh:mm:ss A',
+        }),
+        printf((info) =>`[${info.timestamp}] ${info.level}: ${info.message} `)
+      ),
     }),
     new File({
       filename: `./logs/${enviroment ? enviroment : 'others'}/error.log`,
-      level: 'error',
-      format: simple(),
-    }),
+      level: 'error', // 'error'
+      format: combine(
+        simple(),
+        timestamp({
+          format: 'YYYY-MM-DD hh:mm:ss.SSS A',
+        }),
+        printf((info) =>`[${info.timestamp}] ${info.level}: ${info.message} `)
+      ),
+    }), 
   ],
 })
+
+logger.info('hola desde logger')
 
 module.exports = logger

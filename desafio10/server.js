@@ -1,6 +1,5 @@
 const { mongoUri, clusterInfo } = require('./config/process.config')
 //require('dotenv').config({ path: './.env' }) // lo estoy ejecutando en el archivo de config.process
-console.log('linea 3 del server')
 const http = require('http')
 const express = require('express')
 const path = require('path')
@@ -78,9 +77,9 @@ app.use('/', home)
 
 //seteo un middelware de errores
 app.use((err, req, res, next) => {
-   logger.error(`Se origino un error: ${err.message}`)
+  logger.error(`Se origino un error: ${err.message}`)
   //console.log(err)
-  
+
   res.status(500).send({
     success: false,
     error: err.message,
