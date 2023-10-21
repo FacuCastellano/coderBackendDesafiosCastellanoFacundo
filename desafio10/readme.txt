@@ -8,5 +8,6 @@ se puede ver en el package.json, en los scripts como se esta ejecutando los modo
       "start": "node server.js",  --> el valor por defecto de (-env) es 'producction'
       "dev": "nodemon server.js -m mongo -env development",  --> se asigna el valor developmenta la variable (-env)
 
-ademas se creo un modo de ejecucion "npm run devError" que entra y comete un error fatal, y se cierra el proceso con un error, En el archivo process.config.js entre las lineas 30 y 40
+ademas se creo un modo de ejecucion "npm run devError" que entra y comete un error fatal, y se cierra el proceso con un error, En el archivo process.config.js entre las lineas 30 y 40, no se pq no funciona como deberia despues del await, para que llegue a escribir que se cerro el proceso, tuve q implementar un setTimeOut con un tiempo de espera mayor a 1000 ms pq sino no llegaa a escribir en el archivo.
+
 
