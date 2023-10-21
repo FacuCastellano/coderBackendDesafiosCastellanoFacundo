@@ -28,12 +28,15 @@ program.parse() //esta parsea a variables las seteadas arriba
 const { p: port, mode, database, enviroment } = program.opts()
 
 if (!(enviroment === 'development' || enviroment === 'production')) {
-  
   (async () => {
     await logger.fatal(`wrong eviroment can't be "${enviroment}" `)
+    //process.exit(1) // no entiendo pq no anda esto aca 
   })()
 
-  process.exit(1) // mato el proceso
+  setTimeout(() => {
+    process.exit(1)
+  }, 2500)  // mato el proceso. tengo q poner tiempo grande, pq si pongo 1000 no llega a escribir en el archivo y muere antes.
+
 }
 process.env.PORT = port
 //seteo la base de datos que voy a usar
