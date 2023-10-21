@@ -33,6 +33,7 @@ const options = {
 }
 
 const logger = createLogger({
+  levels: options.levels,
   transports: [
     new Console({
       level: consoleLevel,
@@ -41,7 +42,7 @@ const logger = createLogger({
         timestamp({
           format: 'YYYY-MM-DD hh:mm:ss A',
         }),
-        printf((info) =>`[${info.timestamp}] ${info.level}: ${info.message} `)
+        printf((info) => `[${info.timestamp}] ${info.level}: ${info.message} `)
       ),
     }),
     new File({
@@ -52,12 +53,12 @@ const logger = createLogger({
         timestamp({
           format: 'YYYY-MM-DD hh:mm:ss.SSS A',
         }),
-        printf((info) =>`[${info.timestamp}] ${info.level}: ${info.message} `)
+        printf((info) => `[${info.timestamp}] ${info.level}: ${info.message} `)
       ),
-    }), 
+    }),
   ],
 })
 
-logger.info('hola desde logger')
+//logger.info('hola desde logger')
 
 module.exports = logger

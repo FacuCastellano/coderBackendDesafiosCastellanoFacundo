@@ -1,4 +1,2 @@
-[2023-10-20 06:48:16.732 PM] error: wrong eviroment 
-[2023-10-20 06:50:07.186 PM] error: wrong eviroment can't be cualquiercosa  
-[2023-10-20 06:50:27.460 PM] error: wrong eviroment can't be "cualquiercosa"  
-[2023-10-20 06:50:52.045 PM] error: wrong eviroment can't be "cualquiercosa"  
+[2023-10-21 02:49:28.122 PM] fatal: este es el logger fatal 
+[2023-10-21 02:49:28.126 PM] error: este es el logger error 

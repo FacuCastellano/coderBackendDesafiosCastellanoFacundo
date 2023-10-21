@@ -2,7 +2,6 @@ const { Command } = require('commander')
 require('dotenv').config({ path: './.env' })
 const logger = require('../logger/index')
 
-
 //importo todos los managers para el DAO de mongo
 
 const userManagerMongo = require('../dao/mongo/user.manager')
@@ -10,7 +9,6 @@ const productManagerMongo = require('../dao/mongo/product.manager')
 const cartManagerMongo = require('../dao/mongo/cart.manager')
 const messageManagerMongo = require('../dao/mongo/message.manager')
 const ticketManagerMongo = require('../dao/mongo/ticket.manager')
-
 
 //importo todos los managers para el DAO de fileSystem
 const userManagerFileSystem = require('../dao/fileSystem/user.manager')
@@ -29,10 +27,12 @@ program
 program.parse() //esta parsea a variables las seteadas arriba
 const { p: port, mode, database, enviroment } = program.opts()
 
-if(!(enviroment === 'development' ||enviroment === 'production')){
-  logger.error(`wrong eviroment can't be "${enviroment}" `)
-  //no se pq no puedo hacer logger.fatal() no me lo reconoce
+if (!(enviroment === 'development' || enviroment === 'production')) {
   
+  (async () => {
+    await logger.fatal(`wrong eviroment can't be "${enviroment}" `)
+  })()
+
   process.exit(1) // mato el proceso
 }
 process.env.PORT = port
@@ -70,4 +70,3 @@ module.exports = {
   factoryManager: new FactoryManger(),
   enviroment,
 }
-
