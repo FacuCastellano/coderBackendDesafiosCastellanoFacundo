@@ -16,7 +16,7 @@ const socketManager = require('./websocket')
 const SocketPolices = require('./middelwares/socket.polices')
 const logger = require('./logger')
 const loggerMiddleware = require('./middelwares/logger.http')
-const { api, home } = require('./routes/mainRoutes')
+const { api, home, test } = require('./routes/mainRoutes')
 const puerto = process.env.PORT || 8080
 
 //settings del servidor / express /socket.io
@@ -71,6 +71,9 @@ app.use((req, res, next) => {
 
 //router de api
 app.use('/api', api)
+
+//router de test
+app.use('/test', test)
 
 //router del home
 app.use('/', home)
