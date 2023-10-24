@@ -192,6 +192,20 @@ class HomeController {
       },
     })
   }
+
+  //para .get('/refresh-pass')
+  static refreshPass = async (req, res) => {
+    res.render('refresh-pass', {
+      user: req.user,
+      route: {
+        hasCSS: false,
+        cssFile: null,
+        hasSocket: true,
+        hasJsFile: false,
+        jsFile: null,
+      },
+    })
+  }
 }
 
 module.exports = HomeController

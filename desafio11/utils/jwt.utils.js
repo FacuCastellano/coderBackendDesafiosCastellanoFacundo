@@ -11,7 +11,7 @@ const token = jwt.sign(
     },
   },
   secretKey,
-  { expiresIn: 3600 }
+  { expiresIn: 432400 }
 )
 
 

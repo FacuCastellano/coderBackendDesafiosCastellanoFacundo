@@ -67,6 +67,7 @@ const init = () => {
   passport.use(
     new JWTstrategy(opts, async function (jwt_payload, done) {
       try {
+        console.log('payload desde passport: ', jwt_payload)
         const _user = await userManager.getByMail(jwt_payload.payload.email)
         if (_user) {
           done(null, _user)
