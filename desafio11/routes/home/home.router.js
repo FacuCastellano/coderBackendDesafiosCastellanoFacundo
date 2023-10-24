@@ -23,6 +23,6 @@ router.get('/login', HomeController.showLogin)
 
 router.get('/profile', isAuth, HomeController.showProfile)
 
-router.get('/refresh-pass',isAuthToken, HomeController.refreshPass)
+router.get('/refresh-pass', isAuthToken, HomeController.refreshPass)
 
 module.exports = router

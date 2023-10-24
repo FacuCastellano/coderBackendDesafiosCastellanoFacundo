@@ -7,7 +7,7 @@ const secretKey = process.env.SECRETO_JWT
 const token = jwt.sign(
   {
     payload: {
-      email: 'facu@gmail.com',
+      email: 'martin@gmail.com',
     },
   },
   secretKey,

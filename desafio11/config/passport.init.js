@@ -60,10 +60,9 @@ const init = () => {
   //logueo con JWT
 
   const opts = {}
-  opts.jwtFromRequest = ExtractJwt.fromUrlQueryParameter('tk')
+  opts.jwtFromRequest = ExtractJwt.fromUrlQueryParameter('token')
   opts.secretOrKey = process.env.SECRETO_JWT
-  // opts.issuer = 'accounts.examplesoft.com'
-  // opts.audience = 'yoursite.net'
+
   passport.use(
     new JWTstrategy(opts, async function (jwt_payload, done) {
       try {
