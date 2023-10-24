@@ -5,6 +5,8 @@ const userManager = factoryManager.userManager
 //const userManager = require('../dao/user.manager')
 const { hashPassword, isValidPassword } = require('../utils/password.utils')
 const LocalStrategy = local.Strategy
+const JWTstrategy = require('passport-jwt').Strategy
+const ExtractJwt = require('passport-jwt').ExtractJwt
 
 const signup = async (req, email, password, done) => {
   try {
@@ -55,4 +57,6 @@ module.exports = {
   LocalStrategy,
   signup,
   loginLocal,
+  JWTstrategy,
+  ExtractJwt
 }

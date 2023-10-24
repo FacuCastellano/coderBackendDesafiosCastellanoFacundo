@@ -1,6 +1,5 @@
 
 //esta configuracion la tengo q hacer aparte, para no generar referencias cruzadas
-
 const { Command } = require('commander')
 require('dotenv').config({ path: './.env' })
 const program = new Command()

@@ -1,3 +1,4 @@
+require('dotenv').config({ path: './.env' })
 const passport = require('passport')
 const GitHubStrategy = require('passport-github2')
 //const userManager = require('../dao/user.manager')
@@ -5,7 +6,13 @@ const GitHubStrategy = require('passport-github2')
 const { factoryManager } = require('./process.config')
 const userManager = factoryManager.userManager
 const cartManager = factoryManager.cartManager
-const { LocalStrategy, signup, loginLocal } = require('./passport.strategies')
+const {
+  LocalStrategy,
+  signup,
+  loginLocal,
+  JWTstrategy,
+  ExtractJwt,
+} = require('./passport.strategies')
 const DTOuser = require('../utils/dto.user')
 
 const init = () => {
@@ -50,6 +57,31 @@ const init = () => {
     )
   )
 
+  //logueo con JWT
+
+  const opts = {}
+  opts.jwtFromRequest = ExtractJwt.fromUrlQueryParameter('tk')
+  opts.secretOrKey = process.env.SECRETO_JWT
+  // opts.issuer = 'accounts.examplesoft.com'
+  // opts.audience = 'yoursite.net'
+  passport.use(
+    new JWTstrategy(opts, async function (jwt_payload, done) {
+      try {
+        const _user = await userManager.getByMail(jwt_payload.payload.email)
+        if (_user) {
+          done(null, _user)
+          return
+        } else {
+          done(null, false)
+          return
+        }
+      } catch (err) {
+        return done(err, false)
+      }
+    })
+  )
+
+  // serelizador
   passport.serializeUser((user, done) => {
     done(null, user.id)
   })
@@ -60,9 +92,9 @@ const init = () => {
     //done(null, user)
 
     // no le veo la ventaja, pero lo implemento por la cosigna.
-    const user2 = await userManager.getById(id)    
+    const user2 = await userManager.getById(id)
     const user4 = await DTOuser.converter(user2)
-    
+
     done(null, user4)
   })
 }
