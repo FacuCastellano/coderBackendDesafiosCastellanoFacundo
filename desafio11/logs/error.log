@@ -4,3 +4,6 @@
 [2023-10-21 03:18:18.689 PM] error: este es el logger error 
 [2023-10-21 03:18:44.874 PM] fatal: este es el logger fatal 
 [2023-10-21 03:18:44.876 PM] error: este es el logger error 
+[2023-10-24 03:44:19.271 PM] error: passport is not defined 
+[2023-10-24 03:53:43.284 PM] error: Cannot set headers after they are sent to the client 
+[2023-10-24 03:56:30.095 PM] error: logger is not defined 
