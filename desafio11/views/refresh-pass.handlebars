@@ -1,9 +1,44 @@
 <div class="profile-container">
 
-  <h3>Profile</h3>
-  <p>firstname: <i> {{user.firstname}}</i></p>
+  <h3> change password </h3>
+  <h4> You will change the pass of the account: <i> {{user.email}}</i> </h4>
+  {{!-- <p>firstname: <i> {{user.firstname}}</i></p>
   <p>lastname: <i> {{user.lastname}}</i></p> 
   <p>email: <i> {{user.email}}</i></p> 
   <p>address: <i> {{user.address}}</i></p> 
-  <p>role: <i> {{user.role}}</i></p> 
+  <p>role: <i> {{user.role}}</i></p>  --}}
+
+
+
+<div class="uk-padding-large uk-child-width-1-1" uk-grid>
+  <h4>Please, put your new password</h4>
+  <form action="http://localhost:8080/api/sessions/login" method="post">
+    
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <input name="password" class="uk-input" type="password" placeholder="new password">
+      </div>
+    </div>
+
+
+    <div class="uk-margin">
+      <div class="uk-inline">
+        <input name="password2" class="uk-input" type="password" placeholder="repeat new password">
+      </div>
+    </div>
+
+    {{!-- <div class="uk-margin">
+      <div class="uk-inline">
+        <a href="/api/sessions/login/github">Log-in with Git-Hub</a>
+      </div>
+    </div> --}}
+
+    <button class="uk-button uk-button-default">Send</button>
+
+  </form>
+
+
+</div>
+
+
 </div>

@@ -7,14 +7,12 @@ const secretKey = process.env.SECRETO_JWT
 const token = jwt.sign(
   {
     payload: {
-      email: 'martin@gmail.com',
+      email: 'john@gmail.com',
     },
   },
   secretKey,
   { expiresIn: 432400 }
 )
-
-
 
 try {
   fs.appendFileSync('./utils/jwtFile.txt', token);

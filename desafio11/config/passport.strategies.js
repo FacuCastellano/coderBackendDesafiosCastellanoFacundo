@@ -24,8 +24,6 @@ const signup = async (req, email, password, done) => {
       password: hashPassword(_password),
     })
 
-    console.log('newUser:', newUser)
-
     return done(null, newUser)
   } catch (e) {
     console.log('ha ocurrido un error')
