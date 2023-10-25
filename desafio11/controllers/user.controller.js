@@ -4,16 +4,14 @@ const { factoryManager } = require('../config/process.config')
 const { hashPassword } = require('../utils/password.utils')
 
 const userManager = factoryManager.userManager
-
 class UserController {
-
   static refreshPassword = async (req, res = response) => {
     try {
       const id = req.user._id //lo saco del user que me da el token, para seguridad.
       const passwordNew = hashPassword(req.body.password)
-      userManager.updateById(id,{password:passwordNew})
-      
-      res.send('pass actualizado')
+      userManager.updateById(id, { password: passwordNew })
+
+      res.redirect('/login')
     } catch (err) {
       next(
         new CustomError(
@@ -24,8 +22,6 @@ class UserController {
       )
     }
   }
-
-
 }
 
 // TODOAS LAS RUTAS QUE SIGUEN tienen por defecto el prefijo "/api/user

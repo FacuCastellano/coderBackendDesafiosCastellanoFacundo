@@ -4,7 +4,10 @@ const logger = require('../logger')
 function isAuthToken(req, res, next) {
 
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
-    
+    // console.log('XXXXXXXXXXXXXXXXXX')
+    // console.log(req)
+    // console.log('XXXXXXXXXXXXXXXXXX')
+
     if (err) {
       // Manejo de errores
       return next(err)
