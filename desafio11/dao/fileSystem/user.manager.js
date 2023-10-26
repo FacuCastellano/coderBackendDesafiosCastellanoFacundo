@@ -1,4 +1,3 @@
-
 const BaseManager = require('./base.manager')
 const cartManager = require('./cart.manager')
 //const { hashPassword, isValidPassword } = require('../../utils/password.utils')
@@ -18,14 +17,12 @@ class UserManager extends BaseManager {
     const { _id, password, __v, ...rest } = user
     return rest
   }
-
+ 
+  //esto no lo estoy usando pq estoy usando el DTO, igual lo dejo.
   async getByIdForPassport(userId) {
-
     const userRaw = await this.getById(userId)
     const { __v, password, ...rest } = userRaw
-
     const user = { ...rest }
-
     if (user.email === 'adminCoder@coder.com') {
       user.role = 'admin'
       user.isAdmin = true
@@ -38,7 +35,6 @@ class UserManager extends BaseManager {
     let cartId
 
     if (!cart) {
-     
       const userCart = await cartManager.add({
         user: userId,
         products: [],
@@ -46,10 +42,9 @@ class UserManager extends BaseManager {
 
       cartId = userCart._id
     } else {
-      
       cartId = cart._id
-
     }
+
     user.cartId = cartId
     console.log(user)
     return user

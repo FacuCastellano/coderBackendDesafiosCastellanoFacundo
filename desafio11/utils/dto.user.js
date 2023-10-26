@@ -3,18 +3,31 @@ const { factoryManager } = require('../config/process.config')
 const cartManager = factoryManager.cartManager
 
 class DTOuser {
-
   //hago un metodo statico que es accesible sin instanciar la clase
   static async converter(user) {
     let role
     let isAdmin
+    let isPremium
     let cartId
     if (user.email === 'adminCoder@coder.com') {
       role = 'admin'
       isAdmin = true
+      isPremium = false
     } else {
-      role = 'user'
-      isAdmin = false
+      role = user.role
+      if (user.role === 'admin') {
+        isAdmin = true
+        isPremium = false
+      } else {
+        isAdmin = false
+      }
+      if (user.role === 'premium') {
+        isPremium = true
+        isAdmin = false
+      } else {
+        isPremium = false
+        isAdmin = false
+      }
     }
 
     const cart = await cartManager.getByUserId(user.id)
@@ -25,7 +38,6 @@ class DTOuser {
     } else {
       cartId = cart._id.toString()
     }
-    
 
     return {
       id: user.id,
@@ -33,6 +45,7 @@ class DTOuser {
       lastname: user.lastname,
       role,
       isAdmin,
+      isPremium,
       cartId,
       sex: user.sex,
       email: user.email,
@@ -43,10 +56,6 @@ class DTOuser {
 }
 
 module.exports = DTOuser
-
-
-
-
 
 // class DTOuser2 {
 //   constructor(user) {

@@ -8,6 +8,7 @@ const schema = new Schema(
     description: { type: String, required: true },
     price: { type: Number, required: true },
     stock: { type: Number, default: 0 },
+    owner: { type: String, default: "admin" },
     code: { type: String, unique: true, default: uuid },
     category: { type: String, required: true },
     status: { type: Boolean, default: true },

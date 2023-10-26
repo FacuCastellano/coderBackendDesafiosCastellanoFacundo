@@ -8,6 +8,7 @@ const schema = new Schema({
   address: { type: String },
   password: String,
   age: Number,
+  role: { type: String, default: "user" },
 });
 
 module.exports = model("users", schema);
