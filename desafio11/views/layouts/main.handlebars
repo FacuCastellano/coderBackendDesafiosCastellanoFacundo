@@ -37,6 +37,11 @@
               <a href='/realtimeproducts'>Product Realtime <span class="uk-form-danger">|Admins Only|</span></a>
             </li>
             {{/if}}
+            {{#if user.isPremium}}
+            <li class='uk-active'>
+              <a href='/realtimeproducts'>Product Realtime <span class="uk-form-danger">|Premiums Only|</span></a>
+            </li>
+            {{/if}}
             <li>
               <a href='/carts/{{user.cartId}}'>Carrito<span
                   id='cart-badge'
