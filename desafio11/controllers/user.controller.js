@@ -42,7 +42,7 @@ class UserController {
       if (!(await userManager.isSamePass(email, newPass))) {
         //si el nuevo pass es diferente al actual entro aca. sino voy al else
         const newPassHashed = hashPassword(newPass)
-        userManager.updateById(id, { password: newPass })
+        userManager.updateById(id, { password: newPassHashed })
         res.redirect('/login')
       } else {
         res.cookie(
