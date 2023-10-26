@@ -168,8 +168,19 @@ class HomeController {
 
   // para .get('/login')
   static showLogin = async (req, res) => {
+    // si vengo al login por una redireccion desde otro lado con una cookie de previousErr, aca levanto el msj de error
+    let hasError
+    let error
+    if (req.cookies.previousErr) {
+      hasError = true
+      error = req.cookies.previousErr
+      res.clearCookie('previousErr')
+    }
+    //console.log(req.error)
     res.render('login', {
       route: {
+        hasError,
+        error,
         hasCSS: false,
         cssFile: null,
         hasSocket: true,
@@ -193,11 +204,19 @@ class HomeController {
     })
   }
 
-  static refreshPassPublic= async (req, res) => {
-   
+  static refreshPassPublic = async (req, res) => {
+    // si vengo al login por una redireccion desde otro lado con una cookie de previousErr, aca levanto el msj de error
+    let hasError
+    let error
+    if (req.cookies.previousErr) {
+      hasError = true
+      error = req.cookies.previousErr
+      res.clearCookie('previousErr')
+    }
     res.render('refresh-pass-public', {
-    
       route: {
+        hasError,
+        error,
         hasCSS: false,
         cssFile: null,
         hasSocket: true,
@@ -211,10 +230,20 @@ class HomeController {
   static refreshPassPrivate = async (req, res) => {
     const user = JSON.parse(JSON.stringify(req.user)) // rarisimo esto que tuve que hacer, pero si pongo directo el req.user, me tirar un error de handdlebars, y es raro pq solo lo tira con esta ruta, es decir el error se introduce con el middelware de autenticacion isAuthToken, no se pq.
     const token = req.query.token
+    // si vengo al login por una redireccion desde otro lado con una cookie de previousErr, aca levanto el msj de error
+    let hasError
+    let error
+    if (req.cookies.previousErr) {
+      hasError = true
+      error = req.cookies.previousErr
+      res.clearCookie('previousErr')
+    }
     res.render('refresh-pass-private', {
       user,
       token,
       route: {
+        hasError,
+        error,
         hasCSS: false,
         cssFile: null,
         hasSocket: true,

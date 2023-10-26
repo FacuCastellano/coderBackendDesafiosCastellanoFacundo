@@ -11,3 +11,10 @@
 [2023-10-25 10:11:47.973 PM] error: Invalid status code: enviando mail a: 
 [2023-10-25 10:12:22.608 PM] error: Invalid status code: enviando mail a: 
 [2023-10-26 09:59:23.835 AM] error: Invalid status code: enviando mail a: 
+[2023-10-26 11:10:28.482 AM] error: Cast to ObjectId failed for value "asdasdasdasddasasdasdasd@gmail.com" (type string) at path "_id" for model "users" 
+[2023-10-26 11:14:03.314 AM] error: boolean is not defined 
+[2023-10-26 01:01:03.416 PM] error: No se pudo cambiar el password 
+[2023-10-26 01:01:37.199 PM] error: No se pudo cambiar el password 
+[2023-10-26 01:02:19.751 PM] error: No se pudo cambiar el password 
+[2023-10-26 01:03:01.351 PM] error: No se pudo cambiar el password 
+[2023-10-26 01:03:55.170 PM] error: No se pudo cambiar el password 

@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const BaseManager = require('./base.manager')
 const userModel = require('./models/user.model')
 const cartManager = require('./cart.manager')
+const { isValidPassword } = require('../../utils/password.utils')
 
 class UserManager extends BaseManager {
   constructor() {
@@ -26,7 +27,7 @@ class UserManager extends BaseManager {
 
     let cartId
     if (!cart) {
-      const userCart = await cartManager.add({ user:userId })
+      const userCart = await cartManager.add({ user: userId })
       cartId = userCart._id.toString()
     } else {
       cartId = cart._id.toString()
@@ -46,6 +47,16 @@ class UserManager extends BaseManager {
     return rest
   }
 
+  async isSamePass(email, newPass) {
+    const user = await this.model.findOne({ email }).lean()
+    const { password: oldPass } = user
+    if (isValidPassword(newPass, oldPass)) {
+      return true
+    } else {
+      return false
+    }
+  }
 }
+
 
 module.exports = new UserManager()

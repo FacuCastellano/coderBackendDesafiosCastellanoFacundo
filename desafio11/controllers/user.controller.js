@@ -11,9 +11,19 @@ class UserController {
   static sendMailToRefreshPassword = async (req, res = response, next) => {
     try {
       const email = req.body.email
-      const token = createToken(email) // como segundo argumento puedo poner el tiempo de expiracion (segundos) por defecto es 3600
-      await mailSenderService.send(email,token)
-      res.redirect('/login')
+
+      if (await userManager.getByMail(email)) {
+        const token = createToken(email) // como segundo argumento puedo poner el tiempo de expiracion (segundos) por defecto es 3600
+        await mailSenderService.send(email, token)
+        res.redirect('/login')
+      } else {
+        //el error no lo puedo mandar en un req.error, pq el redirect, crea una nueva solicitud http, por lo que tengo que usar cookies
+        res.cookie(
+          'previousErr',
+          'the supplyed mail is not registered. Please try again.'
+        )
+        res.redirect('/refresh-pass-public')
+      }
     } catch (err) {
       next(
         new CustomError(
@@ -27,12 +37,22 @@ class UserController {
 
   static refreshPassword = async (req, res = response, next) => {
     try {
-      const id = req.user._id //lo saco del user que me da el token, para seguridad.
-      const passwordNew = hashPassword(req.body.password)
-      userManager.updateById(id, { password: passwordNew })
-
-      res.redirect('/login')
+      const { id, email } = req.user //lo saco del user que me da el token, para seguridad.
+      const newPass = req.body.password
+      if (!(await userManager.isSamePass(email, newPass))) {
+        //si el nuevo pass es diferente al actual entro aca. sino voy al else
+        const newPassHashed = hashPassword(newPass)
+        userManager.updateById(id, { password: newPass })
+        res.redirect('/login')
+      } else {
+        res.cookie(
+          'previousErr',
+          `the supplyed password should be different to the current one. Please try again.`
+        )
+        res.redirect(`/refresh-pass-private?token=${req.query.token}`)
+      }
     } catch (err) {
+      console.log(err.message)
       next(
         new CustomError(
           'No se pudo cambiar el password',

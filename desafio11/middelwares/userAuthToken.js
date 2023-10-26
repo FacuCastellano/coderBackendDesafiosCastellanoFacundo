@@ -16,6 +16,7 @@ function isAuthToken(req, res, next) {
     if (!user) {
       // El usuario no está autenticado
       logger.http('token incorrecto - redireccionando a /login')
+      res.cookie('previousErr', 'the supplyed token is not valid')
       return res.status(401).redirect('/login')
     }
 

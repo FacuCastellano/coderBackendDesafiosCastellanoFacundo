@@ -8,6 +8,15 @@
       action='http://localhost:8080/api/users/send-mail-refresh-pass'
       method='post'
     >
+      {{#if route.hasError}}
+        <div class='uk-margin'>
+          <div class='uk-inline'>
+            <span
+              style='color: rgb(224, 110, 110); font-size: 18px; font-weight: bold;'
+            >{{route.error}}</span>
+          </div>
+        </div>
+      {{/if}}
 
       <div class='uk-margin'>
         <div class='uk-inline'>
@@ -25,6 +34,12 @@
       <button id='btn-send' class='uk-button uk-button-default'>Send</button>
 
     </form>
+    <div class='uk-margin'>
+      <div class='uk-inline'>
+        <span>Back to
+          <a href='/login'>Login</a></span>
+      </div>
+    </div>
 
   </div>
 

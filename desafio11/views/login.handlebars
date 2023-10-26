@@ -42,4 +42,12 @@
     </div>
   </div>
 
+  {{#if route.hasError}}
+    <div class='uk-margin'>
+      <div class='uk-inline'>
+        <span style="color: rgb(224, 110, 110); font-size: 18px; font-weight: bold;">{{route.error}}</span>
+      </div>
+    </div>
+  {{/if}}
+
 </div>
