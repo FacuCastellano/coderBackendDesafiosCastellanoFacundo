@@ -7,3 +7,6 @@
 [2023-10-24 03:44:19.271 PM] error: passport is not defined 
 [2023-10-24 03:53:43.284 PM] error: Cannot set headers after they are sent to the client 
 [2023-10-24 03:56:30.095 PM] error: logger is not defined 
+[2023-10-25 10:11:26.490 PM] error: No se pudo enviar el mail 
+[2023-10-25 10:11:47.973 PM] error: Invalid status code: enviando mail a: 
+[2023-10-25 10:12:22.608 PM] error: Invalid status code: enviando mail a: 
