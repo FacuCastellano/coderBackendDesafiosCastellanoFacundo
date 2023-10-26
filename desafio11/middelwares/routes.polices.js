@@ -7,6 +7,16 @@ class RoutePolices {
     next()
   }
 
+  static onlyAdminOrPremium(req, res, next) {
+    console.log(req.user.role)
+    if (!(req.user.role === 'admin' || req.user.role === 'premium')) {
+      res.status(401).send('Unauthorized')
+      return
+    }
+
+    next()
+  }
+
   static onlyUser(req, res, next) {
     if (req.user.role !== 'user') {
       res.status(401).send('Unauthorized')

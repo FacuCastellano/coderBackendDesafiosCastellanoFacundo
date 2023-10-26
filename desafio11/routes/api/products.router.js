@@ -19,13 +19,13 @@ router.get('/mockingproducts', ProductController.getMockersProducts)
 router.get('/:pid', ProductController.getOne)
 
 //ruta 3, ruta post para crear un nuevo producto
-router.post('/', RoutePolices.onlyAdmin, isAuth, ProductController.create)
+router.post('/', RoutePolices.onlyAdminOrPremium, ProductController.create)
 
 //ruta 4 ruta put modificar ciertas propiedades de un producto
-router.patch('/:pid',RoutePolices.onlyAdmin,ProductController.updatePropierties)
+router.patch('/:pid', RoutePolices.onlyAdminOrPremium, ProductController.updatePropierties)
 
 //ruta 5, ruta post para eliminar producto
-router.delete('/:pid',RoutePolices.onlyAdmin, ProductController.deleteProduct)
+router.delete('/:pid',RoutePolices.onlyAdminOrPremium, ProductController.deleteProduct)
 
 
 module.exports = router

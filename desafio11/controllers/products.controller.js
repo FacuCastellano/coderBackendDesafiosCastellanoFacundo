@@ -2,6 +2,7 @@ const { factoryManager } = require('../config/process.config')
 const productsMocker = require('../utils/mocking.products')
 const productManager = factoryManager.productManager
 const { CustomError, ErrorType } = require('../errors/custom.error')
+const userManager = require('../dao/mongo/user.manager')
 
 class ProductController {
   // acepta un query parm "limit", que limita la cantidad de productos, si no esta este limite, se traen todos los productos.
@@ -68,7 +69,28 @@ class ProductController {
   // ruta post para crear un nuevo producto
   static create = async (req, res, next) => {
     try {
+      const user = req.user
+      //const user = await userManager.getById(req.user.id)
+      console.log(user)
+      let owner
+      if (
+        user.role === 'premium' ||
+        user.role === 'admin' ||
+        user.email === 'adminCoder@coder.com'
+      ) {
+        if (user.role === 'premium') {
+          owner = user.id
+        } else {
+          owner = admin
+        }
+      } else {
+        //esta validacion ya esta en el middelware del RoutePOlices, pero lo q abunda no dana, nunca deberia entrar aca teoricamente
+        res.status(401).send('Unauthorized')
+        return
+      }
+
       const product = req.body
+      product.owner = owner
       //const info = await productManager.add(product);
       const {
         _id: id,
@@ -99,10 +121,15 @@ class ProductController {
   //ruta put modificar ciertas propiedades de un producto
   static updatePropierties = async (req, res, next) => {
     try {
-      const id = req.params.pid
       const newPropiertiesValues = req.body
+      const pid = req.params.pid
+      const userId = req.user.id
+      if (!productManager.isOwnerOrAdmin({ userId, productId: pid })) {
+        res.status(401).send('Unauthorized')
+        return
+      }
       const productUpdated = await productManager.updateById(
-        id,
+        pid,
         newPropiertiesValues
       )
       res.send({ status: 'success', payload: productUpdated })
@@ -123,6 +150,13 @@ class ProductController {
   static deleteProduct = async (req, res, next) => {
     try {
       const id = req.params.pid
+      const userId = req.user.id
+
+      if (!productManager.isOwnerOrAdmin({ userId, productId: id })) {
+        res.status(401).send('Unauthorized')
+        return
+      }
+
       const info = await productManager.deleteById(id)
       req.io.emit('productDeleted', { status: 'success', productId: id })
       if (info.deletedCount === 1) {

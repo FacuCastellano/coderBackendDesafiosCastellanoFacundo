@@ -15,17 +15,13 @@ class DTOuser {
       isPremium = false
     } else {
       role = user.role
-      console.log('1')
       if (user.role === 'admin') {
-        console.log('2')
         isAdmin = true
         isPremium = false
       } else if (user.role === 'premium') {
-        console.log('3')
         isAdmin = false
         isPremium = true
       } else {
-        console.log('4')
         isPremium = false
         isAdmin = false
       }

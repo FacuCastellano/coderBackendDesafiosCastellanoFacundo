@@ -18,3 +18,5 @@
 [2023-10-26 01:02:19.751 PM] error: No se pudo cambiar el password 
 [2023-10-26 01:03:01.351 PM] error: No se pudo cambiar el password 
 [2023-10-26 01:03:55.170 PM] error: No se pudo cambiar el password 
+[2023-10-26 07:49:22.955 PM] error: Cannot read properties of undefined (reading 'role') 
+[2023-10-26 07:53:54.689 PM] error: Cannot read properties of undefined (reading 'role') 

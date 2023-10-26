@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 const BaseManager = require('./base.manager')
 const productModel = require('./models/product.model')
-const logger = require('../../logger')
-const fs = require('fs')
+const userManager = require('./user.manager')
 //const db = require("../config/connection.mongo");
 
 class ProductManager extends BaseManager {
@@ -93,6 +92,28 @@ class ProductManager extends BaseManager {
       throw new Error(err.message)
     }
   }
+
+  async isOwnerOrAdmin({ userId, productId }) {
+    try {
+      const user = req.user
+      //const user = await userManager.getById(userId)
+      const product = await this.getById(productId)
+      if(!(user)||!(product)){
+        //early return si el producto o el usuario no exis
+        return false
+      }
+      if (user.role === 'admin' || user.email === 'adminCoder@coder.com') {
+        return true
+      }
+      if (product.owner === userId) {
+        return true
+      } else {
+        return false
+      }
+    } catch (err) {
+      throw new Error(err.message)
+    }
+  }
 }
 
-module.exports = new ProductManager() //singleton --> siempre exporto una misma 
+module.exports = new ProductManager() //singleton --> siempre exporto una misma
