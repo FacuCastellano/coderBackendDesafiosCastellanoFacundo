@@ -1,0 +1,31 @@
+<div class='profile-container'>
+
+  <h3>Restore Password</h3>
+  <h4>Send a email to refresh your password</h4>
+  <div class='uk-padding-large uk-child-width-1-1' uk-grid>
+    <h4>Please enter your email address</h4>
+    <form
+      action='http://localhost:8080/api/users/refresh-pass-public'
+      method='post'
+    >
+
+      <div class='uk-margin'>
+        <div class='uk-inline'>
+          <label for='email'>email</label>
+          <input
+            name='email'
+            id='email'
+            class='uk-input'
+            type='email'
+            value=''
+          />
+        </div>
+      </div>
+
+      <button id='btn-send' class='uk-button uk-button-default'>Send</button>
+
+    </form>
+
+  </div>
+
+</div>

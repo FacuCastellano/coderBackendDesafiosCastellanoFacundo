@@ -23,6 +23,10 @@ router.get('/login', HomeController.showLogin)
 
 router.get('/profile', isAuth, HomeController.showProfile)
 
-router.get('/refresh-pass', isAuthToken, HomeController.refreshPass)
+//esta ruta es la que se entra con el token de acceso que se manda por mail
+router.get('/refresh-pass-private', isAuthToken, HomeController.refreshPassPrivate)
+
+//esta ruta es la que se entra para disparar el mail, es publica 
+router.get('/refresh-pass-public', HomeController.refreshPassPublic)
 
 module.exports = router

@@ -193,11 +193,25 @@ class HomeController {
     })
   }
 
+  static refreshPassPublic= async (req, res) => {
+   
+    res.render('refresh-pass-public', {
+    
+      route: {
+        hasCSS: false,
+        cssFile: null,
+        hasSocket: true,
+        hasJsFile: null,
+        jsFile: null,
+      },
+    })
+  }
+
   //para .get('/refresh-pass')
-  static refreshPass = async (req, res) => {
+  static refreshPassPrivate = async (req, res) => {
     const user = JSON.parse(JSON.stringify(req.user)) // rarisimo esto que tuve que hacer, pero si pongo directo el req.user, me tirar un error de handdlebars, y es raro pq solo lo tira con esta ruta, es decir el error se introduce con el middelware de autenticacion isAuthToken, no se pq.
     const token = req.query.token
-    res.render('refresh-pass', {
+    res.render('refresh-pass-private', {
       user,
       token,
       route: {
@@ -205,7 +219,7 @@ class HomeController {
         cssFile: null,
         hasSocket: true,
         hasJsFile: true,
-        jsFile: 'refresh-pass.js',
+        jsFile: 'refresh-pass-private.js',
       },
     })
   }
