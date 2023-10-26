@@ -3,18 +3,22 @@ const passport = require('passport')
 const { factoryManager } = require('../config/process.config')
 const { hashPassword } = require('../utils/password.utils')
 const { CustomError, ErrorType } = require('../errors/custom.error')
+const mailSenderService = require('../services/mail.sender.service')
+const createToken = require('../utils/jwt.utils')
 
 const userManager = factoryManager.userManager
 class UserController {
   static sendMailToRefreshPassword = async (req, res = response, next) => {
     try {
       const email = req.body.email
-      res.send('enviando mail a:', email)
+      const token = createToken(email) // como segundo argumento puedo poner el tiempo de expiracion (segundos) por defecto es 3600
+      await mailSenderService.send(email,token)
+      res.redirect('/login')
     } catch (err) {
       next(
         new CustomError(
           err.message,
-          ErrorType.OTRO,
+          ErrorType.Otro,
           'UserController-sendMailToRefreshPassword'
         )
       )
@@ -32,7 +36,7 @@ class UserController {
       next(
         new CustomError(
           'No se pudo cambiar el password',
-          ErrorType.OTRO,
+          ErrorType.Otro,
           'UserController-refreshPassword'
         )
       )
