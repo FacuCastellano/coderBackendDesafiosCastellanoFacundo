@@ -7,6 +7,10 @@ const formAddContainer = document.getElementById('formAdd-container')
 const formAdd = document.getElementById('formAddProduct')
 formAddContainer.appendChild(formAdd)
 
+const formUpdateContainer = document.getElementById('formUpdate-container')
+const formUpdate = document.getElementById('formUpdateProduct')
+formUpdateContainer.appendChild(formUpdate)
+
 const formDeleteContainer = document.getElementById('formDelete-container')
 const formDel = document.getElementById('formDeleteProduct')
 formDeleteContainer.appendChild(formDel)
@@ -14,6 +18,7 @@ formDeleteContainer.appendChild(formDel)
 const mainContainner = document.getElementById('main-container')
 
 const buttonFormAdd = document.getElementById('button-formAdd')
+const buttonFormUpd = document.getElementById('button-formUpdate')
 const buttonFormDel = document.getElementById('button-formDel')
 
 //socket escuchar evento de producto agregado
@@ -112,4 +117,74 @@ buttonFormDel.addEventListener('click', async (event) => {
   })
 
   formDel.elements['inputId'].value = null
+})
+
+//funcion para controlar el envio del form de UPDATE de producto
+buttonFormUpd.addEventListener('click', async (event) => {
+  const id = formUpdate.elements['id'].value
+  const productUpdated = {}
+
+  if (formUpdate.elements['title'].value) {
+    productUpdated.title = formUpdate.elements['title'].value
+  }
+
+  if (formUpdate.elements['description'].value) {
+    productUpdated.description = formUpdate.elements['description'].value
+  }
+
+  if (formUpdate.elements['price'].value) {
+    productUpdated.price = +formUpdate.elements['price'].value
+  }
+
+  if (formUpdate.elements['code'].value) {
+    productUpdated.code = formUpdate.elements['code'].value
+  }
+
+  if (formUpdate.elements['stock'].value) {
+    productUpdated.stock = +formUpdate.elements['stock'].value
+  }
+
+  if (
+    formUpdate.elements['thumbnails1'].value ||
+    formUpdate.elements['thumbnails2'].value ||
+    formUpdate.elements['thumbnails3'].value
+  ) {
+    thumbnails = []
+    thumbnails.push(
+      formUpdate.elements['thumbnails1'].value,
+      formUpdate.elements['thumbnails2'].value,
+      formUpdate.elements['thumbnails3'].value
+    )
+    productUpdated.thumbnails = thumbnails
+  }
+
+  //console.log(formUpdate.elements['status'].value)
+  if (formUpdate.elements['status'].value === 'on') {
+    productUpdated.status = true
+  } else {
+    productUpdated.status = false
+  }
+
+  //let category
+  if (formUpdate.elements['category'].value) {
+    productUpdated.category = formUpdate.elements['category'].value
+    // category = formUpdate.elements['category'].value
+  }
+
+  console.log(productUpdated)
+  // const response = await fetch('http://localhost:8080/api/products', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify(newProduct),
+  // })
+
+  formUpdate.elements['title'].value = ''
+  formUpdate.elements['description'].value = ''
+  formUpdate.elements['price'].value = 0
+  formUpdate.elements['code'].value = ''
+  formUpdate.elements['stock'].value = 0
+  //formUpdate.elements['status'].value = 'on'
+  formUpdate.elements['category'].value = ''
 })

@@ -93,21 +93,27 @@ class ProductManager extends BaseManager {
     }
   }
 
-  async isOwnerOrAdmin({ userId, productId }) {
+  async isOwnerOrAdmin({ user, productId }) {
     try {
-      const user = req.user
-      //const user = await userManager.getById(userId)
+      
+      console.log('el user es')
+      console.log(user)
+      // const user = req.user
+      // //const user = await userManager.getById(userId)
       const product = await this.getById(productId)
       if(!(user)||!(product)){
         //early return si el producto o el usuario no exis
         return false
       }
-      if (user.role === 'admin' || user.email === 'adminCoder@coder.com') {
+      if (user.role === 'admin') {
+        console.log('entre en 1')
         return true
       }
-      if (product.owner === userId) {
+      if (product.owner === user.id) {
+        console.log('entre en 2')
         return true
       } else {
+        console.log('entre en 3')
         return false
       }
     } catch (err) {

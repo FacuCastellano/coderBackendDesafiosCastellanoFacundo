@@ -81,7 +81,7 @@ class ProductController {
         if (user.role === 'premium') {
           owner = user.id
         } else {
-          owner = admin
+          owner = "admin"
         }
       } else {
         //esta validacion ya esta en el middelware del RoutePOlices, pero lo q abunda no dana, nunca deberia entrar aca teoricamente
@@ -106,6 +106,7 @@ class ProductController {
       })
       res.send({ status: 'success', productId: id })
     } catch (err) {
+      console.log(err.message)
       next(
         new CustomError(
           'No se pudo crear el producto',
@@ -149,18 +150,17 @@ class ProductController {
   //ruta post para eliminar producto
   static deleteProduct = async (req, res, next) => {
     try {
-      const id = req.params.pid
-      const userId = req.user.id
+      const pid = req.params.pid
+      const user = req.user
 
-      if (!productManager.isOwnerOrAdmin({ userId, productId: id })) {
+      if (! await productManager.isOwnerOrAdmin({ user, productId: pid })) {
         res.status(401).send('Unauthorized')
         return
       }
-
-      const info = await productManager.deleteById(id)
-      req.io.emit('productDeleted', { status: 'success', productId: id })
+      const info = await productManager.deleteById(pid)
+      req.io.emit('productDeleted', { status: 'success', productId: pid })
       if (info.deletedCount === 1) {
-        res.send({ status: `success, the product with id:${id} was deleted` })
+        res.send({ status: `success, the product with id:${pid} was deleted` })
         return
       }
       res.status(404).send({ status: `error, product not found` })
