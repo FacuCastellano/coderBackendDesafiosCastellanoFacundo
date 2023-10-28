@@ -124,11 +124,13 @@ class ProductController {
     try {
       const newPropiertiesValues = req.body
       const pid = req.params.pid
-      const userId = req.user.id
-      if (!productManager.isOwnerOrAdmin({ userId, productId: pid })) {
+      const user = req.user
+ 
+      if (!await productManager.isOwnerOrAdmin({ user, productId: pid })) {
         res.status(401).send('Unauthorized')
         return
       }
+
       const productUpdated = await productManager.updateById(
         pid,
         newPropiertiesValues

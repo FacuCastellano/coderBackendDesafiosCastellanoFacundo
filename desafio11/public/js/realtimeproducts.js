@@ -172,19 +172,25 @@ buttonFormUpd.addEventListener('click', async (event) => {
   }
 
   console.log(productUpdated)
-  // const response = await fetch('http://localhost:8080/api/products', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(newProduct),
-  // })
-
+  const response = await fetch(`http://localhost:8080/api/products/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(productUpdated),
+  })
+  console.log(response)
   formUpdate.elements['title'].value = ''
   formUpdate.elements['description'].value = ''
-  formUpdate.elements['price'].value = 0
+  formUpdate.elements['price'].value = ''
   formUpdate.elements['code'].value = ''
-  formUpdate.elements['stock'].value = 0
+  formUpdate.elements['stock'].value = ''
   //formUpdate.elements['status'].value = 'on'
   formUpdate.elements['category'].value = ''
+  console.log(response.status)
+  if (response.status == 200) {
+    window.location.reload(); //recargo la pagina para ver la modificacion.
+  }else{
+    console.log('no redireccione!')
+  }
 })
