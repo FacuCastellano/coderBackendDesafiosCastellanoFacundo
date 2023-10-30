@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const BaseManager = require('./base.manager')
 const userModel = require('./models/user.model')
 const cartManager = require('./cart.manager')
@@ -16,6 +15,7 @@ class UserManager extends BaseManager {
     const user = { ...rest }
 
     if (user.email === 'adminCoder@coder.com') {
+      met
       user.role = 'admin'
       user.isAdmin = true
     } else {
@@ -56,7 +56,20 @@ class UserManager extends BaseManager {
       return false
     }
   }
-}
 
+  async switchRole(id) {
+    const user = await this.getById(id)
+
+    if (user.role === 'admin') {
+      return //el admin no puede ser modificado desde aca.
+    } else if (user.role === 'premium') {
+      await this.updateById(id, { role: 'user' })
+    } else if (user.role === 'user') {
+      await this.updateById(id, { role: 'premium' })
+    } else {
+      throw new Error('User role in database is wrong')
+    }
+  }
+}
 
 module.exports = new UserManager()

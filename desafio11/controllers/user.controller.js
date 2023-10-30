@@ -62,6 +62,25 @@ class UserController {
       )
     }
   }
+
+  //switchRole
+  static switchRole = async (req, res = response, next) => {
+    try {
+      const uid = req.params.uid //el id del user a modificar.
+      await userManager.switchRole(uid)
+      res.send('ok')
+
+    } catch (err) {
+      
+      next(
+        new CustomError(
+          err.message,
+          ErrorType.DB,
+          'UserController-switchRole'
+        )
+      )
+    }
+  }
 }
 
 // TODOAS LAS RUTAS QUE SIGUEN tienen por defecto el prefijo "/api/user

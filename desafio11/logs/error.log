@@ -28,3 +28,12 @@
 [2023-10-27 11:30:26.338 AM] error: No se pudo crear el producto 
 [2023-10-27 11:35:17.067 AM] error: No se pudo crear el producto 
 [2023-10-27 08:42:21.734 PM] error: No se pudo updatear el producto 
+[2023-10-30 10:53:43.463 AM] error: this.model.getByUserId is not a function 
+[2023-10-30 10:55:31.393 AM] error: this.model.getByUserId is not a function 
+[2023-10-30 10:56:30.580 AM] error: this.model.getByUserId is not a function 
+[2023-10-30 10:57:40.206 AM] error: this.model.updateById is not a function 
+[2023-10-30 10:58:44.925 AM] error: this.model.getById is not a function 
+[2023-10-30 10:59:19.031 AM] error: this.model.updateById is not a function 
+[2023-10-30 11:01:35.658 AM] error: this.model.updateById is not a function 
+[2023-10-30 11:06:51.942 AM] error: this.model.updateById is not a function 
+[2023-10-30 11:15:23.266 AM] error: User role in database is wrong 

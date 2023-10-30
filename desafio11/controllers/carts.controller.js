@@ -50,8 +50,18 @@ class CartController {
   //agrego un producto a un carrito, puedo pasar el qty y si no lo paso por default sera 1.
   static addProduct = async (req, res, next) => {
     try {
-      const id = req.params.cid //es el id del cart
+      const user = req.user
       const productId = req.params.pid
+      
+      if ( await productManager.isOwnerOrAdmin({ user, productId })) {
+        console.log("lo prohibo")
+        // si entro es pq el user es owner de este producto.
+        //los admin no pueden agregar productos tmpc..
+        res.status(401).send('Unauthorized')
+        return
+      }
+      
+      const id = req.params.cid //es el id del cart
       const qty = req.query.qty
       const wasAdded = await cartManager.getByIdAndAddProduct({
         id,
@@ -59,6 +69,7 @@ class CartController {
         qty,
       })
       if (wasAdded) {
+        console.log('lo agregue')
         res.send({
           status: 'Success',
           payload: {

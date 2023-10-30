@@ -8,10 +8,12 @@ const router = Router() //este objeto contendra todas las rutas de esta seccion,
 
 router.post('/', CartController.create) //crea un carrito nuevo (pero tengo que asociarlo a un userId)
 router.get('/:cid', CartController.getProducts)
-
+ 
+//esta ruta agrega el producto al carrito
+//esta ruta solo los user O premium la pueden usar, y los premium no pueden agregar sus propiios productos.
 router.post(
   '/:cid/product/:pid',
-  RoutePolices.onlyUser,
+  RoutePolices.onlyUserOrPremium,
   CartController.addProduct
 )
 router.put('/:cid/product/:pid', CartController.setProductQty)
