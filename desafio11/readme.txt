@@ -20,5 +20,5 @@ usuarios premium:
     653bda475ed7bfb2ec319c72
 
 para cambiar de role, entre "user" y "premium" se tiene q estar logueado como admin. 
-si bien deberia ser mediante una solicitud, lo hice con un 'GET' para poder hacer la peticion desde el navegador, por que no se como hacer mandar a traves de postman, para verificar via passport que soy un admin. podria hacerla con post, pero tendria q crear una nueva vista para poder hacer la solicitud post desde esta. por eso lo hice con un get.
-po
+si bien deberia ser mediante una solicitud, lo hice con un 'GET' para poder hacer la peticion desde el navegador, por que no se como hacer mandar a traves de postman, para verificar via passport que soy un admin. podria hacerla con post, pero tendria q crear una nueva vista para poder probarla por eso no lo hice.. 
+
