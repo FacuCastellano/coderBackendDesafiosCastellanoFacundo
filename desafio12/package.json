@@ -10,7 +10,7 @@
     "devError": "node server.js -env cualquiercosa",
     "dev-mg-dev": "nodemon server.js -m mongo -db Dev",
     "dev-fs": "nodemon server.js -m fileSystem -db FS",
-    "asd": "node utils/jwt.utils.js",
+    "asd": "node doc/index.js",
     "seed:products": "node ./scripts/seed.products.js",
     "seed:users": "node ./scripts/seed.users.js",
     "seed:carts": "node ./scripts/seed.carts.js",
@@ -41,6 +41,8 @@
     "require-promise": "^1.0.1",
     "simple-faker": "^0.0.61",
     "socket.io": "^4.7.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "sweetalert2": "^11.7.22",
     "uuid": "^9.0.0",
     "winston": "^3.11.0"

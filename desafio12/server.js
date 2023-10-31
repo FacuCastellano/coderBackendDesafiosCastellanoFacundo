@@ -17,6 +17,8 @@ const SocketPolices = require('./middelwares/socket.polices')
 const logger = require('./logger')
 const loggerMiddleware = require('./middelwares/logger.http')
 const { api, home, test } = require('./routes/mainRoutes')
+const { swaggerUiExpressServe, swaggerUiExpressSetup } = require('./doc')
+
 const puerto = process.env.PORT || 8080
 
 //settings del servidor / express /socket.io
@@ -33,6 +35,9 @@ app.set('view engine', 'handlebars') // setear handlebars como motor de plantill
 
 //sirvo la carpeta public
 app.use('/static', express.static(path.join(__dirname + '/public')))
+
+//levanto la ruta para la documentacion, http://localhost:8080/apidocs/ (la pongo antes de cualquier middelware, para que sea mas eficiente)
+app.use('/apidocs', swaggerUiExpressServe, swaggerUiExpressSetup)
 
 //middelwares para dar formato a las request http
 
@@ -56,8 +61,8 @@ app.use(
   })
 )
 
-//cargo las estrategias de passport.
 
+//cargo las estrategias de passport.
 initPassportLocal()
 
 app.use(passport.initialize())
@@ -90,6 +95,9 @@ app.use((err, req, res, next) => {
     errorTrigger: err.place,
   })
 })
+
+
+
 
 //seteo para q el socket-io,
 //aca seteo el io, para que use passport, y meterle el user, en las peticiones.
