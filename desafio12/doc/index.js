@@ -8,7 +8,13 @@ const spec = swaggerJsDoc({
     info: {
       title: 'Proyecto CoderHouse- Backend',
       description: 'Documentacion de la API para un e-commerce',
+      version:'1.0.0' //es la version de mi API, aparece en un tag Gris a la izquierda del tag verde de la version de swagger
     },
+    contact:{
+      name: "API Support",
+      url: "https://www.linkedin.com/in/facundo-castellano",
+      email:"support@myapi.com"
+    }
   },
   apis: [`${__dirname}/*.yaml`],
 })

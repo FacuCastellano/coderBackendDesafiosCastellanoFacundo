@@ -37,3 +37,14 @@
 [2023-10-30 11:01:35.658 AM] error: this.model.updateById is not a function 
 [2023-10-30 11:06:51.942 AM] error: this.model.updateById is not a function 
 [2023-10-30 11:15:23.266 AM] error: User role in database is wrong 
+[2023-10-31 12:21:59.873 PM] error: No se encontro el producto 
+[2023-10-31 10:11:04.553 PM] error: No se encontro el producto 
+[2023-10-31 10:47:30.101 PM] error: No se encontro el producto 
+[2023-10-31 10:48:10.113 PM] error: No se encontro el producto 
+[2023-10-31 10:49:00.153 PM] error: No se encontro el producto 
+[2023-11-01 08:55:10.562 AM] error: No se encontro el producto 
+[2023-11-01 09:00:13.274 AM] error: No se pudo obtener los productos 
+[2023-11-01 09:08:56.100 AM] error: No se pudo obtener los productos 
+[2023-11-01 09:18:24.108 AM] error: No se pudo obtener los productos 
+[2023-11-01 09:34:35.761 AM] error: No se encontro el producto 
+[2023-11-01 11:24:23.299 AM] error: Cannot read properties of undefined (reading 'role') 

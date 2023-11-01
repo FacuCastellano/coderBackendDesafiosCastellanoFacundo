@@ -12,14 +12,14 @@ class ProductController {
       const { limit, page, sort, query } = req.query
       // isNaN(Valor), devuelve true si Valor no es parseable a tipo Number
       if (isNaN(limit) && limit !== undefined) {
-        res.send({
+        res.status(400).send({
           status: 'Error, the (limit) value is wrong',
           payload: null,
         })
         return
       }
       if (isNaN(page) && page !== undefined) {
-        res.send({
+        res.status(400).send({
           status: 'Error, the (page) value is wrong',
           payload: null,
         })
@@ -42,18 +42,18 @@ class ProductController {
           'ProductController-getAll'
         )
       )
-    }
-  }
+    } 
+  } 
 
   //ruta 2,  router.get('/:pid')
   //trae le producto cuyo id se le pase como Url Param.
   static getOne = async (req, res, next) => {
     try {
       const id = req.params.pid
-      product = await productManager.getById(id)
+      const product = await productManager.getById(id)
       res.send({ status: 'success', payload: product })
     } catch (err) {
-      console.log(1)
+      
       next(
         new CustomError(
           'No se encontro el producto',
@@ -71,7 +71,6 @@ class ProductController {
     try {
       const user = req.user
       //const user = await userManager.getById(req.user.id)
-      console.log(user)
       let owner
       if (
         user.role === 'premium' ||
@@ -93,7 +92,7 @@ class ProductController {
       product.owner = owner
       //const info = await productManager.add(product);
       const {
-        _id: id,
+        _id: id, 
         title,
         price,
         category,
