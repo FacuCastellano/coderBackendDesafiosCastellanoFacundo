@@ -164,7 +164,7 @@ class ProductController {
         res.send({ status: `success, the product with id:${pid} was deleted` })
         return
       }
-      res.status(404).send({ status: `error, product not found` })
+      res.status(404).send({ status: 'error, product not found' })
       return
     } catch (err) {
       next(

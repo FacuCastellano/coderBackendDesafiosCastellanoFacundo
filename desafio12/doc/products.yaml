@@ -1,6 +1,7 @@
 paths:
 ###############
   /api/products/:
+# [GET] /api/products/
     get:
       tags:
         - Products
@@ -40,6 +41,7 @@ paths:
             application/json:
               type: object
               $ref: '#components/responses/GeneralInternalServerError'
+# [POST] /api/products/
     post:
       tags:
         - Products
@@ -52,7 +54,7 @@ paths:
               $ref: '#components/schemas/ProductForCreateBody'
             example:
               title: Hacha Vikinga 
-              description: es un aventura de fantasia y magia
+              description: hacha liviana de guerra, para una mano.
               price: 20
               stock: 500
               category: armas 
@@ -78,6 +80,7 @@ paths:
 ###############
 #-----------------------------------------------------------
   /api/products/{pid}:
+#[GET] /api/products/{pid}
     get:
       tags:
         - Products
@@ -103,13 +106,13 @@ paths:
             application/json:
               type: object
               $ref: '#components/responses/GeneralInternalServerError'
-#xxxxxxxxxxxxxxxxxxxxxxx patch
+#[PATCH] /api/products/{pid}
     patch:
       tags:
         - Products
       description: | #ingreso multiples lineas con el pip
         this path update a product, corresponding to the id passed as a parameter. you must passed only the atributes that you want update.
-        You MUST be admin o premium to use this path.
+        You MUST be admin o premium to use this path. premium user could only made a update if is the owner fo the product. admin user could made a update of any product.
       parameters:
         - name: pid
           in: path # este es un parametro de url 
@@ -127,15 +130,49 @@ paths:
             example:
               price: 15
               stock: 35
- 
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              # schema: #no entiendo pq esto no anda.
+              #   $ref: '#components/responses/UpdateProductSuccess'
+              type: object
+              $ref: '#components/responses/UpdateProductSuccess'
+        500:
+          description: internal server error
+          content:
+            application/json:
+              type: object
+              $ref: '#components/responses/GeneralInternalServerError'
+#[DELETE] /api/products/{pid}
+    delete:
+      tags:
+        - Products
+      description: | #ingreso multiples lineas con el pip
+        this path delete a product, corresponding to the id passed as a parameter.
+        You MUST be admin o premium to use this path. premium user could only could delete a product if is the owner of the product. admin user could delete any product.
+      parameters:
+        - name: pid
+          in: path # este es un parametro de url 
+          required: true
+          description: the product ID, must be a mongoDB's ID as a string.
+          type: string
+
       responses:
         200:
           description: success
           content:
             application/json:
               type: object
-              $ref: '#components/responses/GetOneProductSuccess'
-
+              $ref: '#components/responses/DeleteProductSuccess'
+        404:
+          description: not found
+          content:
+            application/json:
+              type: object
+              properties:
+                status: 'error, product not found'
         500:
           description: internal server error
           content:
@@ -143,9 +180,11 @@ paths:
               type: object
               $ref: '#components/responses/GeneralInternalServerError'
 #xxxxxxxxxxxxxxxxxxxxxxx
-
 #-----------------------------------------------------------
+#[COMPONENTS]
 components:
+
+#[RESPONSES]
   responses:
 
     Prueba:
@@ -204,16 +243,30 @@ components:
         status: 'success'
         productId:
           type: string
-          
+
+    UpdateProductSuccess:
+      type: object
+      properties:
+        status: 'success'
+        payload:
+          type: object
+          $ref: '#components/schemas/Product'
+
+    DeleteProductSuccess:
+      type: object
+      properties:
+        status: 'success, the product with id: xx... was deleted'
+#[REQUEST BODIES] 
   requestBodies:
     createProductBody:
       type: object
       $ref: '#components/schemas/ProductForCreateBody'
-##############
+
+#[EXAMPLES] 
   examples:
 
 
-############                                  
+#[SCHEMAS]                             
   schemas:
     Product:
       type: object
@@ -251,7 +304,6 @@ components:
         id:
           type: string
 
-## 
     ProductForCreateBody:
       type: object
       properties:
