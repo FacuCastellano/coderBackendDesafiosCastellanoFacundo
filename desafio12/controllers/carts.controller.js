@@ -17,8 +17,7 @@ class CartController {
       }
 
       await cartManager.add({ userId })
-      console.log('se creo un carrito')
-      res.send({ status: 'Success, a new was created' })
+      res.send({ status: 'success, a new was created' })
     } catch (err) {
       //console.log(e)
       next(new CustomError(err.message, ErrorType.DB, 'CartController-create'))
@@ -54,9 +53,6 @@ class CartController {
       const productId = req.params.pid
       
       if ( await productManager.isOwnerOrAdmin({ user, productId })) {
-        console.log("lo prohibo")
-        // si entro es pq el user es owner de este producto.
-        //los admin no pueden agregar productos tmpc..
         res.status(401).send('Unauthorized')
         return
       }

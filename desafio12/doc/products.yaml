@@ -187,11 +187,6 @@ components:
 #[RESPONSES]
   responses:
 
-    Prueba:
-      type: object
-      properties:
-        message: hola mundo desde prueba
-
     GetAllProductsSuccess:
       type: object
       properties:

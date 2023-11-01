@@ -3,13 +3,13 @@ paths:
     get:
       summary: Obtener todos los usuarios
       tags:
-        - Users
+        - UsersLALOO
       responses:
         200:
           description: Success
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
                 items:
                   $ref: '#components/schemas/User'
@@ -19,9 +19,9 @@ paths:
     get:
       summary: Obtener un usuario por Id
       tags:
-        - Users
+        - UsersLALOO
       parameters:
-        - name: uid
+        - name: uid 
           in: path
           required: true
           description: El id del usuario tomado de mongo
@@ -30,7 +30,7 @@ paths:
     put:
       summary: Modificar un usuario por id
       tags:
-        - Users
+        - UsersLALOO
       parameters:
         - name: uid
           in: path
@@ -49,7 +49,7 @@ paths:
           description: Success
           content:
             application/json:
-              schema: 
+              schema:
                 $ref: '#components/schemas/Success'
         500:
           description: Failure
@@ -57,7 +57,7 @@ paths:
     delete:
       summary: Borrar un usuario por id
       tags:
-        - Users
+        - UsersLALOO
       parameters:
         - name: uid
           in: path
@@ -66,8 +66,7 @@ paths:
           schema:
             $type: string
 
-
-#los componentes pueden ser los mismos en los distintos archivos, pero tengo q crearlos siempre pq no se pueden importar. 
+#los componentes pueden ser los mismos en los distintos archivos, pero tengo q crearlos siempre pq no se pueden importar.
 components:
   requestsBodies:
     updateUser:
@@ -99,7 +98,7 @@ components:
       properties:
         status:
           type: string
-        message: 
+        message:
           type: string
     User:
       type: object
@@ -127,4 +126,3 @@ components:
         last_name: Espinosa
         email: alguien@example.com
         role: Admin
-      

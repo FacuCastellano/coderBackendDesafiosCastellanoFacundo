@@ -48,3 +48,5 @@
 [2023-11-01 09:18:24.108 AM] error: No se pudo obtener los productos 
 [2023-11-01 09:34:35.761 AM] error: No se encontro el producto 
 [2023-11-01 11:24:23.299 AM] error: Cannot read properties of undefined (reading 'role') 
+[2023-11-01 03:07:32.773 PM] error: Cast to ObjectId failed for value "{cid}" (type string) at path "_id" for model "carts" 
+[2023-11-01 03:07:34.385 PM] error: Cast to ObjectId failed for value "{cid}" (type string) at path "_id" for model "carts" 
